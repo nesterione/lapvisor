@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoPro Lap Compare</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header with file selection and settings -->
+        <header class="header">
+            <div class="file-section">
+                <button id="select-json-btn" class="btn btn-primary">
+                    📄 Select Session JSON
+                </button>
+                <span id="json-name" class="file-name">No session file selected</span>
+            </div>
+            
+        </header>
+
+        <!-- Lap selection -->
+        <div class="lap-selection">
+            <div class="lap-selector">
+                <label for="lap1-select">Lap 1:</label>
+                <select id="lap1-select" disabled>
+                    <option value="">Select a lap</option>
+                </select>
+            </div>
+            
+            <div class="lap-selector">
+                <label for="lap2-select">Lap 2:</label>
+                <select id="lap2-select" disabled>
+                    <option value="">Select a lap</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Video players section -->
+        <div class="video-section">
+            <div class="video-container">
+                <div class="video-header">
+                    <h3 id="lap1-title">Lap 1</h3>
+                    <div class="timing-info">
+                        <span id="lap1-time">--:--:--</span>
+                        <span class="separator">/</span>
+                        <span id="lap1-duration">--:--</span>
+                    </div>
+                </div>
+                <video id="video1" preload="metadata">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
+            <div class="video-container">
+                <div class="video-header">
+                    <h3 id="lap2-title">Lap 2</h3>
+                    <div class="timing-info">
+                        <span id="lap2-time">--:--:--</span>
+                        <span class="separator">/</span>
+                        <span id="lap2-duration">--:--</span>
+                    </div>
+                </div>
+                <video id="video2" preload="metadata">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <!-- Control panel -->
+        <div class="controls">
+            <div class="playback-controls">
+                <button id="play-pause-btn" class="btn btn-control" disabled>⏸️</button>
+                <button id="restart-btn" class="btn btn-control" disabled>⏮️</button>
+                <input type="range" id="seek-slider" min="0" max="100" value="0" disabled />
+            </div>
+            
+            <div class="speed-controls">
+                <label>Speed:</label>
+                <button class="speed-btn" data-speed="0.5">0.5x</button>
+                <button class="speed-btn active" data-speed="1">1x</button>
+                <button class="speed-btn" data-speed="1.5">1.5x</button>
+                <button class="speed-btn" data-speed="2">2x</button>
+            </div>
+            
+            <div class="sync-controls">
+                <button id="sync-btn" class="btn btn-secondary" disabled>🔄 Re-sync</button>
+            </div>
+        </div>
+
+        <!-- Status bar -->
+        <div class="status-bar">
+            <div id="status-text">Ready - Select a session JSON file to begin</div>
+            <div id="lap-info"></div>
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
