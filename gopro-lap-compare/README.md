@@ -1,10 +1,11 @@
 # GoPro Lap Compare
 
-A desktop application for comparing GoPro kart racing laps side-by-side in real-time.
+A desktop application for comparing GoPro kart racing laps side-by-side in real-time, supporting both single-session and cross-session lap comparisons.
 
 ## Features
 
 - **Real-time Playback**: Compare two laps without creating video files
+- **Cross-Session Comparisons**: Compare laps from different racing sessions/videos
 - **Synchronized Controls**: Play, pause, and seek both videos together  
 - **Precise Timing**: Uses the same timing logic as the Python scripts
 - **Speed Control**: Playback at 0.5x, 1x, 1.5x, or 2x speed
@@ -23,14 +24,24 @@ npm install
 npm start
 ```
 
-### 3. Load Session File
-1. Click **"📄 Select Session JSON"** to choose your session file
-   - The JSON file contains video filename, first lap timing, and lap times
-   - Video file should be in the same directory as the JSON file
+### 3. Load Session Files
+
+#### For Same-Session Comparison (comparing laps from one video):
+1. Click **"📄 Select Session 1 JSON"** to choose your session file
+2. Click **"📄 Select Session 2 JSON"** and choose the same session file again
+3. Both videos will use the same session data, allowing you to compare different laps from the same video
+
+#### For Cross-Session Comparison (comparing laps from different videos):
+1. Click **"📄 Select Session 1 JSON"** to choose the first session file
+2. Click **"📄 Select Session 2 JSON"** to choose the second session file
+3. Each JSON file contains video filename, first lap timing, and lap times
+4. Video files should be in the same directory as their respective JSON files
 
 ### 4. Select Laps to Compare
-1. Choose **Lap 1** from the first dropdown
-2. Choose **Lap 2** from the second dropdown
+1. Choose **Lap 1 (Session 1)** from the first dropdown
+2. Choose **Lap 2 (Session 2)** from the second dropdown
+   - For same-session comparison: both dropdowns will show laps from the same session
+   - For cross-session comparison: each dropdown shows laps from its respective session
 
 ### 5. Controls
 - **Space**: Play/Pause
@@ -90,6 +101,14 @@ If you have existing CSV files, you can create a JSON session file manually:
 3. Copy lap times from your CSV file into the `laps` array
 4. Set the `video` filename and `first_lap` timing
 
+## Cross-Session Comparison Benefits
+
+- **Performance Analysis**: Compare your best lap from different track days
+- **Improvement Tracking**: See how your driving has evolved over time
+- **Setup Comparison**: Analyze the effect of different kart setups
+- **Weather/Conditions**: Compare performance in different track conditions
+- **Driver Comparison**: Compare laps between different drivers
+
 ## Technical Notes
 
 - Uses HTML5 video players for real-time playback
@@ -97,3 +116,5 @@ If you have existing CSV files, you can create a JSON session file manually:
 - Videos are synchronized by calculating lap start times: `firstLapStart + sum(previousLapDurations)`
 - Supports flexible timestamp formats: seconds, MM:SS, or HH:MM:SS
 - JSON format allows for future extension with GPS tracks, telemetry data, etc.
+- Cross-session comparison works with different video files and timing data
+- Each session maintains independent timing calculations for accurate synchronization

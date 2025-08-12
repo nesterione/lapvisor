@@ -1,10 +1,23 @@
 class LapCompareApp {
     constructor() {
-        this.videoPath = null;
-        this.jsonData = null;
-        this.lapTimes = [];
-        this.lapStarts = [];
-        this.firstLapStart = null;
+        // Session 1 data (left video)
+        this.session1Data = {
+            videoPath: null,
+            jsonData: null,
+            lapTimes: [],
+            lapStarts: [],
+            firstLapStart: null
+        };
+        
+        // Session 2 data (right video)
+        this.session2Data = {
+            videoPath: null,
+            jsonData: null,
+            lapTimes: [],
+            lapStarts: [],
+            firstLapStart: null
+        };
+        
         this.selectedLaps = { lap1: null, lap2: null };
         this.isPlaying = false;
         this.currentSpeed = 1;
@@ -17,8 +30,10 @@ class LapCompareApp {
     
     initializeElements() {
         // File controls
-        this.selectJSONBtn = document.getElementById('select-json-btn');
-        this.jsonNameSpan = document.getElementById('json-name');
+        this.selectSession1Btn = document.getElementById('select-session1-btn');
+        this.selectSession2Btn = document.getElementById('select-session2-btn');
+        this.session1NameSpan = document.getElementById('session1-name');
+        this.session2NameSpan = document.getElementById('session2-name');
         
         // Lap selection
         this.lap1Select = document.getElementById('lap1-select');
@@ -48,8 +63,12 @@ class LapCompareApp {
     
     setupEventListeners() {
         // File selection
-        this.selectJSONBtn.addEventListener('click', () => {
-            window.electronAPI.selectJSONFile();
+        this.selectSession1Btn.addEventListener('click', () => {
+            window.electronAPI.selectSession1File();
+        });
+        
+        this.selectSession2Btn.addEventListener('click', () => {
+            window.electronAPI.selectSession2File();
         });
         
         // Lap selection
@@ -234,75 +253,99 @@ class LapCompareApp {
     // File loading
     loadJSON(data) {
         try {
-            this.jsonData = data.data;
-            this.videoPath = data.videoPath;
-            this.jsonNameSpan.textContent = data.path.split(/[/\\]/).pop();
+            const sessionNumber = data.sessionNumber;
+            const sessionData = sessionNumber === 1 ? this.session1Data : this.session2Data;
+            const nameSpan = sessionNumber === 1 ? this.session1NameSpan : this.session2NameSpan;
+            
+            // Update session data
+            sessionData.jsonData = data.data;
+            sessionData.videoPath = data.videoPath;
+            nameSpan.textContent = data.path.split(/[/\\]/).pop();
             
             // Parse lap times from JSON
-            this.lapTimes = this.jsonData.laps.map(lapTime => this.parseTimestamp(lapTime));
+            sessionData.lapTimes = sessionData.jsonData.laps.map(lapTime => this.parseTimestamp(lapTime));
             
             // Parse first lap start time
-            this.firstLapStart = this.parseTimestamp(this.jsonData.first_lap);
+            sessionData.firstLapStart = this.parseTimestamp(sessionData.jsonData.first_lap);
             
-            // Set both video sources
-            this.video1.src = `file://${this.videoPath}`;
-            this.video2.src = `file://${this.videoPath}`;
+            // Calculate lap starts for this session
+            this.calculateLapStarts(sessionNumber);
             
-            this.calculateLapStarts();
+            // Set video source for appropriate video element
+            if (sessionNumber === 1) {
+                this.video1.src = `file://${sessionData.videoPath}`;
+            } else {
+                this.video2.src = `file://${sessionData.videoPath}`;
+            }
+            
             this.populateLapSelectors();
-            this.statusText.textContent = `Session loaded - ${this.lapTimes.length} laps found`;
+            this.updateStatusText();
             this.updateVideoState();
         } catch (error) {
-            this.statusText.textContent = `Error loading JSON: ${error.message}`;
+            this.statusText.textContent = `Error loading Session ${data.sessionNumber} JSON: ${error.message}`;
             console.error('JSON parsing error:', error);
         }
     }
     
     populateLapSelectors() {
         // Clear existing options
-        this.lap1Select.innerHTML = '<option value="">Select a lap</option>';
-        this.lap2Select.innerHTML = '<option value="">Select a lap</option>';
+        this.lap1Select.innerHTML = '<option value="">Select a lap from session 1</option>';
+        this.lap2Select.innerHTML = '<option value="">Select a lap from session 2</option>';
         
-        // Add lap options
-        this.lapTimes.forEach((lapTime, index) => {
-            const lapNumber = index + 1;
-            const timeStr = this.formatLapTime(lapTime);
-            const option1 = new Option(`Lap ${lapNumber} (${timeStr})`, lapNumber);
-            const option2 = new Option(`Lap ${lapNumber} (${timeStr})`, lapNumber);
-            
-            this.lap1Select.appendChild(option1);
-            this.lap2Select.appendChild(option2);
-        });
+        // Populate lap 1 selector (Session 1)
+        if (this.session1Data.lapTimes.length > 0) {
+            this.session1Data.lapTimes.forEach((lapTime, index) => {
+                const lapNumber = index + 1;
+                const timeStr = this.formatLapTime(lapTime);
+                const option1 = new Option(`Lap ${lapNumber} (${timeStr})`, lapNumber);
+                this.lap1Select.appendChild(option1);
+            });
+            this.lap1Select.disabled = false;
+        } else {
+            this.lap1Select.disabled = true;
+        }
         
-        // Enable selectors
-        this.lap1Select.disabled = false;
-        this.lap2Select.disabled = false;
+        // Populate lap 2 selector (Session 2)
+        if (this.session2Data.lapTimes.length > 0) {
+            this.session2Data.lapTimes.forEach((lapTime, index) => {
+                const lapNumber = index + 1;
+                const timeStr = this.formatLapTime(lapTime);
+                const option2 = new Option(`Lap ${lapNumber} (${timeStr})`, lapNumber);
+                this.lap2Select.appendChild(option2);
+            });
+            this.lap2Select.disabled = false;
+        } else {
+            this.lap2Select.disabled = true;
+        }
     }
     
     
-    calculateLapStarts() {
-        this.lapStarts = [];
+    calculateLapStarts(sessionNumber) {
+        const sessionData = sessionNumber === 1 ? this.session1Data : this.session2Data;
+        sessionData.lapStarts = [];
         
-        if (!isFinite(this.firstLapStart) || this.lapTimes.length === 0) {
-            console.warn('Cannot calculate lap starts: invalid firstLapStart or no lap times');
+        if (!isFinite(sessionData.firstLapStart) || sessionData.lapTimes.length === 0) {
+            console.warn(`Cannot calculate lap starts for session ${sessionNumber}: invalid firstLapStart or no lap times`);
             return;
         }
         
         let cumulative = 0;
         
-        this.lapTimes.forEach((lapTime, index) => {
+        sessionData.lapTimes.forEach((lapTime, index) => {
             if (isFinite(lapTime) && lapTime > 0) {
-                this.lapStarts.push(this.firstLapStart + cumulative);
+                sessionData.lapStarts.push(sessionData.firstLapStart + cumulative);
                 cumulative += lapTime;
             } else {
-                console.warn(`Invalid lap time at index ${index}: ${lapTime}`);
-                this.lapStarts.push(NaN);
+                console.warn(`Invalid lap time at index ${index} for session ${sessionNumber}: ${lapTime}`);
+                sessionData.lapStarts.push(NaN);
             }
         });
     }
     
     handleLapSelection(videoNum, lapNum) {
-        if (!lapNum || lapNum < 1 || lapNum > this.lapTimes.length) {
+        const sessionData = videoNum === 1 ? this.session1Data : this.session2Data;
+        
+        if (!lapNum || lapNum < 1 || lapNum > sessionData.lapTimes.length) {
             this.selectedLaps[`lap${videoNum}`] = null;
             return;
         }
@@ -313,28 +356,47 @@ class LapCompareApp {
     }
     
     updateLapDisplay(videoNum, lapNum) {
+        const sessionData = videoNum === 1 ? this.session1Data : this.session2Data;
         const lapIndex = lapNum - 1;
-        const lapTime = this.lapTimes[lapIndex];
+        const lapTime = sessionData.lapTimes[lapIndex];
         const formattedTime = this.formatLapTime(lapTime);
         
         if (videoNum === 1) {
-            this.lap1Title.textContent = `Lap ${lapNum}`;
+            this.lap1Title.textContent = `Lap ${lapNum} (Session 1)`;
             this.lap1Duration.textContent = formattedTime;
         } else {
-            this.lap2Title.textContent = `Lap ${lapNum}`;
+            this.lap2Title.textContent = `Lap ${lapNum} (Session 2)`;
             this.lap2Duration.textContent = formattedTime;
         }
     }
     
-    updateVideoState() {
-        const hasJSON = this.jsonData !== null;
-        const hasVideo = this.videoPath !== null;
-        const hasLapTimes = this.lapTimes.length > 0;
-        const hasFirstLap = isFinite(this.firstLapStart) && this.firstLapStart >= 0;
-        const hasBothLaps = this.selectedLaps.lap1 && this.selectedLaps.lap2;
-        const hasValidLapStarts = this.lapStarts.length > 0 && this.lapStarts.some(start => isFinite(start));
+    updateStatusText() {
+        const hasSession1 = this.session1Data.jsonData !== null;
+        const hasSession2 = this.session2Data.jsonData !== null;
+        const session1LapCount = this.session1Data.lapTimes.length;
+        const session2LapCount = this.session2Data.lapTimes.length;
         
-        const canPlay = hasJSON && hasVideo && hasLapTimes && hasFirstLap && hasBothLaps && hasValidLapStarts;
+        if (hasSession1 && hasSession2) {
+            this.statusText.textContent = `Both sessions loaded - Session 1: ${session1LapCount} laps, Session 2: ${session2LapCount} laps`;
+        } else if (hasSession1) {
+            this.statusText.textContent = `Session 1 loaded (${session1LapCount} laps) - Select Session 2 JSON file`;
+        } else if (hasSession2) {
+            this.statusText.textContent = `Session 2 loaded (${session2LapCount} laps) - Select Session 1 JSON file`;
+        } else {
+            this.statusText.textContent = 'Ready - Select JSON files for both sessions to begin';
+        }
+    }
+    
+    updateVideoState() {
+        const hasSession1 = this.session1Data.jsonData !== null && this.session1Data.videoPath !== null;
+        const hasSession2 = this.session2Data.jsonData !== null && this.session2Data.videoPath !== null;
+        const hasSession1Data = this.session1Data.lapTimes.length > 0 && isFinite(this.session1Data.firstLapStart);
+        const hasSession2Data = this.session2Data.lapTimes.length > 0 && isFinite(this.session2Data.firstLapStart);
+        const hasBothLaps = this.selectedLaps.lap1 && this.selectedLaps.lap2;
+        const hasValidSession1Starts = this.session1Data.lapStarts.length > 0 && this.session1Data.lapStarts.some(start => isFinite(start));
+        const hasValidSession2Starts = this.session2Data.lapStarts.length > 0 && this.session2Data.lapStarts.some(start => isFinite(start));
+        
+        const canPlay = hasSession1 && hasSession2 && hasSession1Data && hasSession2Data && hasBothLaps && hasValidSession1Starts && hasValidSession2Starts;
         
         this.playPauseBtn.disabled = !canPlay;
         this.restartBtn.disabled = !canPlay;
@@ -344,10 +406,8 @@ class LapCompareApp {
         if (canPlay) {
             this.statusText.textContent = 'Ready to compare laps';
             this.syncVideos();
-        } else if (!hasJSON) {
-            this.statusText.textContent = 'Select a session JSON file';
-        } else if (!hasBothLaps) {
-            this.statusText.textContent = 'Select two laps to compare';
+        } else if (!hasBothLaps && hasSession1 && hasSession2) {
+            this.statusText.textContent = 'Select laps from both sessions to compare';
         }
     }
     
@@ -357,14 +417,14 @@ class LapCompareApp {
         const lap1Index = this.selectedLaps.lap1 - 1;
         const lap2Index = this.selectedLaps.lap2 - 1;
         
-        if (lap1Index < 0 || lap1Index >= this.lapStarts.length ||
-            lap2Index < 0 || lap2Index >= this.lapStarts.length) {
+        if (lap1Index < 0 || lap1Index >= this.session1Data.lapStarts.length ||
+            lap2Index < 0 || lap2Index >= this.session2Data.lapStarts.length) {
             console.error('Invalid lap selection for sync');
             return;
         }
         
-        const lap1Start = this.lapStarts[lap1Index];
-        const lap2Start = this.lapStarts[lap2Index];
+        const lap1Start = this.session1Data.lapStarts[lap1Index];
+        const lap2Start = this.session2Data.lapStarts[lap2Index];
         
         if (!isFinite(lap1Start) || !isFinite(lap2Start)) {
             console.error('Invalid lap start times for sync:', { lap1Start, lap2Start });
@@ -429,15 +489,15 @@ class LapCompareApp {
         const lap1Index = this.selectedLaps.lap1 - 1;
         const lap2Index = this.selectedLaps.lap2 - 1;
         
-        if (lap1Index < 0 || lap1Index >= this.lapStarts.length ||
-            lap2Index < 0 || lap2Index >= this.lapStarts.length) {
+        if (lap1Index < 0 || lap1Index >= this.session1Data.lapStarts.length ||
+            lap2Index < 0 || lap2Index >= this.session2Data.lapStarts.length) {
             return;
         }
         
-        const lap1Start = this.lapStarts[lap1Index];
-        const lap2Start = this.lapStarts[lap2Index];
-        const lap1Duration = this.lapTimes[lap1Index];
-        const lap2Duration = this.lapTimes[lap2Index];
+        const lap1Start = this.session1Data.lapStarts[lap1Index];
+        const lap2Start = this.session2Data.lapStarts[lap2Index];
+        const lap1Duration = this.session1Data.lapTimes[lap1Index];
+        const lap2Duration = this.session2Data.lapTimes[lap2Index];
         
         if (!isFinite(lap1Start) || !isFinite(lap2Start) || 
             !isFinite(lap1Duration) || !isFinite(lap2Duration)) {
@@ -467,9 +527,9 @@ class LapCompareApp {
         if (!this.selectedLaps.lap1 || !this.selectedLaps.lap2) return;
         
         const lap1Index = this.selectedLaps.lap1 - 1;
-        const lap1Start = this.lapStarts[lap1Index];
-        const lap1Duration = this.lapTimes[lap1Index];
-        const lap2Duration = this.lapTimes[this.selectedLaps.lap2 - 1];
+        const lap1Start = this.session1Data.lapStarts[lap1Index];
+        const lap1Duration = this.session1Data.lapTimes[lap1Index];
+        const lap2Duration = this.session2Data.lapTimes[this.selectedLaps.lap2 - 1];
         
         const maxDuration = Math.max(lap1Duration, lap2Duration);
         const currentProgress = Math.max(0, this.video1.currentTime - lap1Start);
@@ -482,11 +542,12 @@ class LapCompareApp {
         const video = videoNum === 1 ? this.video1 : this.video2;
         const timeSpan = videoNum === 1 ? this.lap1Time : this.lap2Time;
         const lapNum = this.selectedLaps[`lap${videoNum}`];
+        const sessionData = videoNum === 1 ? this.session1Data : this.session2Data;
         
         if (!lapNum) return;
         
         const lapIndex = lapNum - 1;
-        const lapStart = this.lapStarts[lapIndex];
+        const lapStart = sessionData.lapStarts[lapIndex];
         const currentLapTime = Math.max(0, video.currentTime - lapStart);
         
         timeSpan.textContent = this.formatTimestamp(currentLapTime);

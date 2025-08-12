@@ -11,27 +11,34 @@
         <!-- Header with file selection and settings -->
         <header class="header">
             <div class="file-section">
-                <button id="select-json-btn" class="btn btn-primary">
-                    📄 Select Session JSON
-                </button>
-                <span id="json-name" class="file-name">No session file selected</span>
+                <div class="session-group">
+                    <button id="select-session1-btn" class="btn btn-primary">
+                        📄 Select Session 1 JSON
+                    </button>
+                    <span id="session1-name" class="file-name">No session 1 file selected</span>
+                </div>
+                <div class="session-group">
+                    <button id="select-session2-btn" class="btn btn-primary">
+                        📄 Select Session 2 JSON
+                    </button>
+                    <span id="session2-name" class="file-name">No session 2 file selected</span>
+                </div>
             </div>
-            
         </header>
 
         <!-- Lap selection -->
         <div class="lap-selection">
             <div class="lap-selector">
-                <label for="lap1-select">Lap 1:</label>
+                <label for="lap1-select">Lap 1 (Session 1):</label>
                 <select id="lap1-select" disabled>
-                    <option value="">Select a lap</option>
+                    <option value="">Select a lap from session 1</option>
                 </select>
             </div>
             
             <div class="lap-selector">
-                <label for="lap2-select">Lap 2:</label>
+                <label for="lap2-select">Lap 2 (Session 2):</label>
                 <select id="lap2-select" disabled>
-                    <option value="">Select a lap</option>
+                    <option value="">Select a lap from session 2</option>
                 </select>
             </div>
         </div>
@@ -40,7 +47,7 @@
         <div class="video-section">
             <div class="video-container">
                 <div class="video-header">
-                    <h3 id="lap1-title">Lap 1</h3>
+                    <h3 id="lap1-title">Lap 1 (Session 1)</h3>
                     <div class="timing-info">
                         <span id="lap1-time">--:--:--</span>
                         <span class="separator">/</span>
@@ -54,7 +61,7 @@
             
             <div class="video-container">
                 <div class="video-header">
-                    <h3 id="lap2-title">Lap 2</h3>
+                    <h3 id="lap2-title">Lap 2 (Session 2)</h3>
                     <div class="timing-info">
                         <span id="lap2-time">--:--:--</span>
                         <span class="separator">/</span>
@@ -90,7 +97,7 @@
 
         <!-- Status bar -->
         <div class="status-bar">
-            <div id="status-text">Ready - Select a session JSON file to begin</div>
+            <div id="status-text">Ready - Select JSON files for both sessions to begin</div>
             <div id="lap-info"></div>
         </div>
     </div>

@@ -36,9 +36,14 @@ function createMenu() {
       label: 'File',
       submenu: [
         {
-          label: 'Open Session JSON...',
-          accelerator: 'CmdOrCtrl+O',
-          click: () => selectJSONFile()
+          label: 'Open Session 1 JSON...',
+          accelerator: 'CmdOrCtrl+1',
+          click: () => selectJSONFile(1)
+        },
+        {
+          label: 'Open Session 2 JSON...',
+          accelerator: 'CmdOrCtrl+2',
+          click: () => selectJSONFile(2)
         },
         { type: 'separator' },
         {
@@ -69,9 +74,9 @@ function createMenu() {
   Menu.setApplicationMenu(menu);
 }
 
-async function selectJSONFile() {
+async function selectJSONFile(sessionNumber) {
   const result = await dialog.showOpenDialog(mainWindow, {
-    title: 'Select Session JSON File',
+    title: `Select Session ${sessionNumber} JSON File`,
     filters: [
       { name: 'JSON Files', extensions: ['json'] },
       { name: 'All Files', extensions: ['*'] }
@@ -89,18 +94,23 @@ async function selectJSONFile() {
       const videoPath = require('path').resolve(jsonDir, jsonData.video);
       
       mainWindow.webContents.send('json-selected', {
+        sessionNumber: sessionNumber,
         path: result.filePaths[0],
         data: jsonData,
         videoPath: videoPath
       });
     } catch (error) {
-      dialog.showErrorBox('Error', `Failed to read JSON file: ${error.message}`);
+      dialog.showErrorBox('Error', `Failed to read Session ${sessionNumber} JSON file: ${error.message}`);
     }
   }
 }
 
-ipcMain.handle('select-json-file', async () => {
-  await selectJSONFile();
+ipcMain.handle('select-session1-file', async () => {
+  await selectJSONFile(1);
+});
+
+ipcMain.handle('select-session2-file', async () => {
+  await selectJSONFile(2);
 });
 
 app.whenReady().then(() => {

@@ -31,6 +31,12 @@ body {
 .file-section {
     display: flex;
     align-items: center;
+    gap: 20px;
+}
+
+.session-group {
+    display: flex;
+    align-items: center;
     gap: 12px;
 }
 
@@ -137,7 +143,7 @@ body {
 .lap-selector label {
     font-size: 14px;
     font-weight: 500;
-    min-width: 50px;
+    min-width: 120px;
 }
 
 .lap-selector select {
@@ -147,7 +153,7 @@ body {
     background: #2d2d2d;
     color: #fff;
     font-size: 14px;
-    min-width: 150px;
+    min-width: 200px;
 }
 
 .lap-selector select:disabled {
@@ -301,6 +307,14 @@ video {
 }
 
 /* Responsive adjustments */
+@media (max-width: 1400px) {
+    .file-section {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+}
+
 @media (max-width: 1200px) {
     .header {
         flex-direction: column;
@@ -320,5 +334,9 @@ video {
     
     #seek-slider {
         width: 200px;
+    }
+    
+    .lap-selector select {
+        min-width: 150px;
     }
 }
