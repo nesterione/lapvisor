@@ -7,10 +7,13 @@ A desktop application for comparing GoPro kart racing laps side-by-side in real-
 - **Real-time Playback**: Compare two laps without creating video files
 - **Cross-Session Comparisons**: Compare laps from different racing sessions/videos
 - **Synchronized Controls**: Play, pause, and seek both videos together  
+- **Individual Video Seeking**: Seek each video independently for detailed analysis
+- **Sync Status Monitoring**: Real-time sync status with visual indicators
 - **Precise Timing**: Uses the same timing logic as the Python scripts
+- **Enhanced Metadata**: Shows both lap time and absolute video position
 - **Speed Control**: Playback at 0.5x, 1x, 1.5x, or 2x speed
 - **Live Timing**: Shows current lap time and total lap duration
-- **Keyboard Shortcuts**: Quick control with space, arrow keys, and more
+- **Comprehensive Keyboard Shortcuts**: Quick control for both synchronized and individual seeking
 
 ## Usage
 
@@ -44,11 +47,19 @@ npm start
    - For cross-session comparison: each dropdown shows laps from its respective session
 
 ### 5. Controls
-- **Space**: Play/Pause
-- **R**: Restart both videos
-- **S**: Re-sync videos
-- **Arrow Left/Right**: Seek backward/forward
-- **Speed Buttons**: Change playback speed
+
+#### Synchronized Controls
+- **Space**: Play/Pause both videos
+- **Arrow Left/Right**: Seek both videos backward/forward (0.2 second steps)
+- **S**: Re-sync videos to lap starts
+- **Speed Buttons**: Change playback speed for both videos
+
+#### Individual Video Controls
+- **Q/W**: Seek Video 1 (Session 1) backward/forward (0.2 second steps)
+- **E/R**: Seek Video 2 (Session 2) backward/forward (0.2 second steps)
+- **Individual Seek Sliders**: Click and drag below each video for precise positioning
+- **Sync Status Indicator**: Shows when videos are synchronized (⚡), slightly out of sync (⚠️), or significantly out of sync (🔄)
+- **Hotkey Hints**: Always visible in the status bar for quick reference
 
 ## Session JSON Format
 

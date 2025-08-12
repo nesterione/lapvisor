@@ -48,6 +48,12 @@ class LapCompareApp {
         this.lap2Time = document.getElementById('lap2-time');
         this.lap1Duration = document.getElementById('lap1-duration');
         this.lap2Duration = document.getElementById('lap2-duration');
+        this.video1Position = document.getElementById('video1-position');
+        this.video2Position = document.getElementById('video2-position');
+        
+        // Individual seek controls
+        this.video1SeekSlider = document.getElementById('video1-seek');
+        this.video2SeekSlider = document.getElementById('video2-seek');
         
         // Controls
         this.playPauseBtn = document.getElementById('play-pause-btn');
@@ -55,6 +61,11 @@ class LapCompareApp {
         this.seekSlider = document.getElementById('seek-slider');
         this.speedBtns = document.querySelectorAll('.speed-btn');
         this.syncBtn = document.getElementById('sync-btn');
+        
+        // Sync status
+        this.syncIndicator = document.getElementById('sync-indicator');
+        this.syncStatusText = document.getElementById('sync-status-text');
+        this.syncStatus = document.querySelector('.sync-status');
         
         // Status
         this.statusText = document.getElementById('status-text');
@@ -99,6 +110,15 @@ class LapCompareApp {
         
         this.seekSlider.addEventListener('mouseup', () => {
             this.isSeeking = false;
+        });
+        
+        // Individual video seek controls
+        this.video1SeekSlider.addEventListener('input', (e) => {
+            this.handleIndividualSeek(1, parseFloat(e.target.value));
+        });
+        
+        this.video2SeekSlider.addEventListener('input', (e) => {
+            this.handleIndividualSeek(2, parseFloat(e.target.value));
         });
         
         // Speed controls
@@ -403,6 +423,10 @@ class LapCompareApp {
         this.seekSlider.disabled = !canPlay;
         this.syncBtn.disabled = !canPlay;
         
+        // Enable individual seek sliders when respective sessions are loaded
+        this.video1SeekSlider.disabled = !(hasSession1 && hasSession1Data && this.selectedLaps.lap1);
+        this.video2SeekSlider.disabled = !(hasSession2 && hasSession2Data && this.selectedLaps.lap2);
+        
         if (canPlay) {
             this.statusText.textContent = 'Ready to compare laps';
             this.syncVideos();
@@ -523,6 +547,119 @@ class LapCompareApp {
         }
     }
     
+    handleIndividualSeek(videoNumber, percentage) {
+        const sessionData = videoNumber === 1 ? this.session1Data : this.session2Data;
+        const video = videoNumber === 1 ? this.video1 : this.video2;
+        const lapNum = this.selectedLaps[`lap${videoNumber}`];
+        
+        if (!lapNum || !sessionData.lapStarts || sessionData.lapStarts.length === 0) return;
+        
+        const lapIndex = lapNum - 1;
+        if (lapIndex < 0 || lapIndex >= sessionData.lapStarts.length) return;
+        
+        const lapStart = sessionData.lapStarts[lapIndex];
+        const lapDuration = sessionData.lapTimes[lapIndex];
+        
+        if (!isFinite(lapStart) || !isFinite(lapDuration)) {
+            console.error(`Invalid data for individual seek on video ${videoNumber}`);
+            return;
+        }
+        
+        const seekTime = (percentage / 100) * lapDuration;
+        const newTime = lapStart + Math.min(seekTime, lapDuration);
+        
+        const videoDuration = video.duration || Infinity;
+        
+        if (newTime >= 0 && newTime < videoDuration) {
+            video.currentTime = newTime;
+        }
+        
+        this.checkSyncStatus();
+    }
+    
+    handleIndividualSeekByTime(videoNumber, timeOffset) {
+        const video = videoNumber === 1 ? this.video1 : this.video2;
+        const currentTime = video.currentTime;
+        const videoDuration = video.duration || Infinity;
+        
+        const newTime = Math.max(0, Math.min(videoDuration - 0.1, currentTime + timeOffset));
+        video.currentTime = newTime;
+        
+        this.checkSyncStatus();
+    }
+    
+    handleSyncSeekByTime(timeOffset) {
+        if (!this.selectedLaps.lap1 || !this.selectedLaps.lap2) return;
+        
+        const currentTime1 = this.video1.currentTime;
+        const currentTime2 = this.video2.currentTime;
+        const video1Duration = this.video1.duration || Infinity;
+        const video2Duration = this.video2.duration || Infinity;
+        
+        const newTime1 = Math.max(0, Math.min(video1Duration - 0.1, currentTime1 + timeOffset));
+        const newTime2 = Math.max(0, Math.min(video2Duration - 0.1, currentTime2 + timeOffset));
+        
+        this.video1.currentTime = newTime1;
+        this.video2.currentTime = newTime2;
+    }
+    
+    checkSyncStatus() {
+        if (!this.selectedLaps.lap1 || !this.selectedLaps.lap2) return;
+        
+        const lap1Index = this.selectedLaps.lap1 - 1;
+        const lap2Index = this.selectedLaps.lap2 - 1;
+        
+        if (lap1Index < 0 || lap1Index >= this.session1Data.lapStarts.length ||
+            lap2Index < 0 || lap2Index >= this.session2Data.lapStarts.length) {
+            return;
+        }
+        
+        const lap1Start = this.session1Data.lapStarts[lap1Index];
+        const lap2Start = this.session2Data.lapStarts[lap2Index];
+        
+        if (!isFinite(lap1Start) || !isFinite(lap2Start)) return;
+        
+        // Calculate relative positions in each lap
+        const video1LapPosition = Math.max(0, this.video1.currentTime - lap1Start);
+        const video2LapPosition = Math.max(0, this.video2.currentTime - lap2Start);
+        
+        // Calculate sync difference
+        const syncDifference = Math.abs(video1LapPosition - video2LapPosition);
+        
+        // Update sync status based on difference
+        if (syncDifference < 0.5) { // Within 0.5 seconds = synced
+            this.updateSyncStatus('synced', 'Synced');
+        } else if (syncDifference < 2.0) { // 0.5-2 seconds = slightly out of sync
+            this.updateSyncStatus('out-of-sync', `±${syncDifference.toFixed(1)}s`);
+        } else { // > 2 seconds = significantly out of sync
+            this.updateSyncStatus('desync', `±${syncDifference.toFixed(1)}s`);
+        }
+    }
+    
+    updateSyncStatus(status, text) {
+        // Remove all status classes
+        this.syncIndicator.classList.remove('synced', 'out-of-sync', 'desync');
+        this.syncStatus.classList.remove('out-of-sync', 'desync');
+        
+        // Add the current status class
+        this.syncIndicator.classList.add(status);
+        if (status !== 'synced') {
+            this.syncStatus.classList.add(status);
+        }
+        
+        // Update the status text
+        this.syncStatusText.textContent = text;
+        
+        // Update icon based on status
+        if (status === 'synced') {
+            this.syncIndicator.textContent = '⚡';
+        } else if (status === 'out-of-sync') {
+            this.syncIndicator.textContent = '⚠️';
+        } else {
+            this.syncIndicator.textContent = '🔄';
+        }
+    }
+    
     updateSeekSlider() {
         if (!this.selectedLaps.lap1 || !this.selectedLaps.lap2) return;
         
@@ -541,16 +678,34 @@ class LapCompareApp {
     updateTimeDisplay(videoNum) {
         const video = videoNum === 1 ? this.video1 : this.video2;
         const timeSpan = videoNum === 1 ? this.lap1Time : this.lap2Time;
+        const positionSpan = videoNum === 1 ? this.video1Position : this.video2Position;
+        const individualSeeker = videoNum === 1 ? this.video1SeekSlider : this.video2SeekSlider;
         const lapNum = this.selectedLaps[`lap${videoNum}`];
         const sessionData = videoNum === 1 ? this.session1Data : this.session2Data;
+        
+        // Update absolute video position
+        positionSpan.textContent = this.formatTimestamp(video.currentTime);
         
         if (!lapNum) return;
         
         const lapIndex = lapNum - 1;
         const lapStart = sessionData.lapStarts[lapIndex];
+        const lapDuration = sessionData.lapTimes[lapIndex];
         const currentLapTime = Math.max(0, video.currentTime - lapStart);
         
+        // Update lap time display
         timeSpan.textContent = this.formatTimestamp(currentLapTime);
+        
+        // Update individual seek slider position
+        if (isFinite(lapDuration) && lapDuration > 0) {
+            const percentage = Math.min(100, Math.max(0, (currentLapTime / lapDuration) * 100));
+            individualSeeker.value = percentage;
+        }
+        
+        // Check sync status on video 1 timeupdate (to avoid duplicate checks)
+        if (videoNum === 1) {
+            this.checkSyncStatus();
+        }
     }
     
     handleKeyPress(event) {
@@ -566,24 +721,42 @@ class LapCompareApp {
                 break;
             case 'ArrowLeft':
                 event.preventDefault();
-                this.handleSeek(Math.max(0, this.seekSlider.value - 5));
+                this.handleSyncSeekByTime(-0.2); // Go back 0.2 seconds
                 break;
             case 'ArrowRight':
                 event.preventDefault();
-                this.handleSeek(Math.min(100, this.seekSlider.value + 5));
-                break;
-            case 'KeyR':
-                if (event.ctrlKey || event.metaKey) return;
-                event.preventDefault();
-                if (!this.restartBtn.disabled) {
-                    this.restartVideos();
-                }
+                this.handleSyncSeekByTime(0.2); // Go forward 0.2 seconds
                 break;
             case 'KeyS':
                 if (event.ctrlKey || event.metaKey) return;
                 event.preventDefault();
                 if (!this.syncBtn.disabled) {
                     this.syncVideos();
+                }
+                break;
+            case 'KeyQ':
+                event.preventDefault();
+                if (!this.video1SeekSlider.disabled) {
+                    this.handleIndividualSeekByTime(1, -0.2); // Video 1 back 0.2s
+                }
+                break;
+            case 'KeyW':
+                event.preventDefault();
+                if (!this.video1SeekSlider.disabled) {
+                    this.handleIndividualSeekByTime(1, 0.2); // Video 1 forward 0.2s
+                }
+                break;
+            case 'KeyE':
+                event.preventDefault();
+                if (!this.video2SeekSlider.disabled) {
+                    this.handleIndividualSeekByTime(2, -0.2); // Video 2 back 0.2s
+                }
+                break;
+            case 'KeyR':
+                if (event.ctrlKey || event.metaKey) return;
+                event.preventDefault();
+                if (!this.video2SeekSlider.disabled) {
+                    this.handleIndividualSeekByTime(2, 0.2); // Video 2 forward 0.2s
                 }
                 break;
         }

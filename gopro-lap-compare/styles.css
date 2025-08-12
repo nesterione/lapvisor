@@ -208,6 +208,61 @@ video {
     background: #000;
 }
 
+/* Individual video controls */
+.individual-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: #252525;
+    border-top: 1px solid #444;
+}
+
+.seek-label {
+    font-size: 12px;
+    color: #aaa;
+    min-width: 100px;
+}
+
+.individual-seek-slider {
+    flex: 1;
+    height: 4px;
+    background: #444;
+    border-radius: 2px;
+    outline: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.individual-seek-slider:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.individual-seek-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #0078d4;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.individual-seek-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: #0078d4;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.video-position {
+    color: #888;
+    font-size: 13px;
+}
+
 /* Controls */
 .controls {
     display: flex;
@@ -288,6 +343,45 @@ video {
 .sync-controls {
     display: flex;
     align-items: center;
+    gap: 16px;
+}
+
+/* Sync status */
+.sync-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sync-indicator {
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.sync-indicator.synced {
+    color: #4CAF50;
+}
+
+.sync-indicator.out-of-sync {
+    color: #FF9800;
+}
+
+.sync-indicator.desync {
+    color: #F44336;
+}
+
+.sync-status-text {
+    font-size: 12px;
+    color: #ccc;
+    transition: color 0.3s ease;
+}
+
+.sync-status.out-of-sync .sync-status-text {
+    color: #FF9800;
+}
+
+.sync-status.desync .sync-status-text {
+    color: #F44336;
 }
 
 /* Status bar */
@@ -300,6 +394,34 @@ video {
     border-top: 1px solid #444;
     font-size: 12px;
     color: #aaa;
+}
+
+/* Hotkeys hint */
+.hotkeys-hint {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    justify-content: center;
+}
+
+.hotkey-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #888;
+}
+
+.hotkey {
+    background: #333;
+    color: #ccc;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    border: 1px solid #555;
+    font-weight: bold;
 }
 
 #lap-info {
@@ -338,5 +460,24 @@ video {
     
     .lap-selector select {
         min-width: 150px;
+    }
+    
+    .individual-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .individual-seek-slider {
+        width: 100%;
+    }
+    
+    .sync-controls {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .hotkeys-hint {
+        display: none;
     }
 }
