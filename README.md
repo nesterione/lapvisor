@@ -1,6 +1,6 @@
 # lapvisor
 
-A CLI for race data analysis — RaceChrono Analytics for the terminal, designed to be driven by AI agents as well as humans. Aimed at hobby karting and amateur motorsport.
+A CLI for race data analysis — lap times, GPS telemetry, sector splits — designed to be driven by AI agents as well as humans. Aimed at hobby karting and amateur motorsport.
 
 > **Status:** early scaffold. The CLI surface and project layout are in place; format adapters and analysis routines are not implemented yet.
 

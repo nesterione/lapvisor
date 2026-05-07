@@ -1,9 +1,4 @@
-export type SessionFormat =
-  | "racechrono-csv"
-  | "gpx"
-  | "fit"
-  | "tcx"
-  | "lap-csv";
+export type SessionFormat = "gpx" | "fit" | "tcx" | "lap-csv";
 
 export interface Lap {
   index: number;

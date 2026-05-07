@@ -1,7 +1,7 @@
 {
   "name": "lapvisor",
-  "version": "0.0.1",
-  "description": "CLI for race data analysis — RaceChrono Analytics for the terminal, agent-friendly.",
+  "version": "0.0.2",
+  "description": "CLI for race data analysis — lap times, GPS telemetry, sector splits. Agent-friendly.",
   "type": "module",
   "files": [
     "dist"
@@ -30,7 +30,6 @@
     "karting",
     "telemetry",
     "lap-times",
-    "racechrono",
     "cli",
     "ai",
     "agent"

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-`lapvisor` is a CLI for race data analysis — RaceChrono Analytics in a terminal, designed to be driven by AI agents as well as humans. Target use case: hobby karting and amateur motorsport. Outputs are agent-friendly (machine-readable JSON alongside human-formatted views).
+`lapvisor` is a CLI for race data analysis — lap times, GPS telemetry, sector splits — designed to be driven by AI agents as well as humans. Target use case: hobby karting and amateur motorsport. Outputs are agent-friendly (machine-readable JSON alongside human-formatted views).
 
 ## Stack
 
@@ -36,7 +36,7 @@ Confirm with the user before adding heavier deps (chart renderers, FFmpeg wrappe
 
 ## Architecture (three layers)
 
-1. **Adapters** (`src/adapters/`) — read input formats and normalize to a common `Session` shape. Targets: RaceChrono CSV export, GPX, FIT (Garmin), TCX, plain lap-time CSV. Every adapter returns the same model; analysis code never sees raw formats.
+1. **Adapters** (`src/adapters/`) — read input formats and normalize to a common `Session` shape. Targets: GPX, FIT (Garmin), TCX, plain lap-time CSV. Every adapter returns the same model; analysis code never sees raw formats.
 2. **Analysis** (`src/analysis/`) — pure functions over `Session`: lap stats, sector splits, line/speed comparisons, consistency metrics. No I/O.
 3. **CLI + Skills** (`src/cli/`, `src/skills/`) — subcommands compose adapters + analysis. *Skills* are higher-level recipes meant to be invoked by an AI agent (e.g. "find the slowest sector"); each skill emits structured JSON by default and human output behind a flag.
 
