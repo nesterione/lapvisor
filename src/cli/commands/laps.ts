@@ -1,7 +1,15 @@
 import { defineCommand } from "citty";
 import pc from "picocolors";
-import { formatLapTime } from "../../util/time.ts";
-import type { Session } from "../../model.ts";
+import type { Session } from "../../model.js";
+import { formatLapTime } from "../../util/time.js";
+
+interface LapsSummary {
+  source: string;
+  format: Session["format"];
+  lapCount: number;
+  bestMs?: number;
+  meanMs?: number;
+}
 
 export default defineCommand({
   meta: {
@@ -25,16 +33,16 @@ export default defineCommand({
 
     const useJson = args.json || !process.stdout.isTTY;
     if (useJson) {
-      process.stdout.write(JSON.stringify(summary, null, 2) + "\n");
+      process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`);
       return;
     }
 
     console.log(pc.bold(`Session: ${session.source}`));
     console.log(`Format:  ${session.format}`);
     console.log(`Laps:    ${summary.lapCount}`);
-    if (summary.lapCount > 0) {
-      console.log(`Best:    ${pc.green(formatLapTime(summary.bestMs!))}`);
-      console.log(`Mean:    ${formatLapTime(summary.meanMs!)}`);
+    if (summary.bestMs !== undefined && summary.meanMs !== undefined) {
+      console.log(`Best:    ${pc.green(formatLapTime(summary.bestMs))}`);
+      console.log(`Mean:    ${formatLapTime(summary.meanMs)}`);
     }
   },
 });
@@ -43,7 +51,7 @@ async function loadSession(_path: string): Promise<Session> {
   throw new Error("no adapter implemented yet — wire up src/adapters first");
 }
 
-function summarize(session: Session) {
+function summarize(session: Session): LapsSummary {
   const durations = session.laps.map((l) => l.durationMs);
   if (durations.length === 0) {
     return { source: session.source, format: session.format, lapCount: 0 };

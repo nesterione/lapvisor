@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { formatLapTime, parseLapTimeMs } from "../src/util/time.ts";
+import { formatLapTime, parseLapTimeMs } from "../src/util/time.js";
 
 describe("parseLapTimeMs", () => {
   test("plain seconds", () => {

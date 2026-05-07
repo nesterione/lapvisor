@@ -6,10 +6,10 @@ export function parseLapTimeMs(input: string): number {
   if (nums.some((n) => Number.isNaN(n))) {
     throw new Error(`unrecognized lap time format: ${input}`);
   }
-  if (nums.length === 1) return Math.round(nums[0]! * 1000);
-  if (nums.length === 2) return Math.round((nums[0]! * 60 + nums[1]!) * 1000);
+  if (nums.length === 1) return Math.round(nums[0] * 1000);
+  if (nums.length === 2) return Math.round((nums[0] * 60 + nums[1]) * 1000);
   if (nums.length === 3) {
-    return Math.round((nums[0]! * 3600 + nums[1]! * 60 + nums[2]!) * 1000);
+    return Math.round((nums[0] * 3600 + nums[1] * 60 + nums[2]) * 1000);
   }
   throw new Error(`unrecognized lap time format: ${input}`);
 }

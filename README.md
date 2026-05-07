@@ -4,24 +4,30 @@ A CLI for race data analysis — RaceChrono Analytics for the terminal, designed
 
 > **Status:** early scaffold. The CLI surface and project layout are in place; format adapters and analysis routines are not implemented yet.
 
-## Requirements
-
-- [Bun](https://bun.sh) 1.1+
-
 ## Install
+
+Once published to npm:
+
+```sh
+npm install -g lapvisor
+# or run on demand:
+npx lapvisor --help
+```
+
+Requires Node.js 22+. End users do **not** need Bun.
+
+## Develop
+
+Bun (>=1.2) is used for dev and tests; `tsup` produces the Node-runnable bundle that ships to npm.
 
 ```sh
 bun install
-```
-
-## Run
-
-```sh
-bun run dev <subcommand> ...      # run from source
+bun run dev <subcommand> ...      # run from source under Bun
 bun run dev laps --help           # subcommand help
 bun test                          # run tests
-bun run typecheck                 # tsc --noEmit
-bun run build                     # single-file binary -> dist/lapvisor
+bun run lint                      # biome
+bun run build                     # bundle -> dist/index.js (Node ESM)
+node dist/index.js --help         # run the built artifact
 ```
 
 ## Commands

@@ -8,21 +8,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Stack
 
-- **Runtime / bundler / test runner**: Bun (>=1.1). One tool for `bun run`, `bun test`, `bun build`. Prefer Bun built-ins (`Bun.file`, `Bun.spawn`, `Bun.$`) over Node shims.
-- **Language**: TypeScript, strict mode. Bun runs `.ts` directly — no `tsc` build step in development; use `tsc --noEmit` only for typechecking.
-- **CLI framework**: `citty` (UnJS) for nested subcommands. Fall back to `commander` only if `citty` proves limiting.
+- **Dev runtime / test runner**: Bun (>=1.2). Used for `bun run dev`, `bun test`, and CI. Source is plain TS — Bun runs it directly.
+- **Build**: `tsup` bundles `src/cli/index.ts` → `dist/index.js` (ESM, target node22) with a `#!/usr/bin/env node` banner. The published npm artifact is Node-runnable; **end users do not need Bun**.
+- **Language**: TypeScript with `module: NodeNext`. Internal imports use `.js` extensions (NodeNext requirement — TS resolves `.js` to `.ts` source).
+- **Lint / format**: Biome (`bun run lint`, `bun run format`).
+- **CLI framework**: `citty` (UnJS) for nested subcommands.
 - **Validation**: `zod` for user input and external file parsing.
-- **Terminal output**: `picocolors` for color, plain string tables or `cli-table3` for tabular views. JSON output when `--json` is passed (default for non-TTY).
+- **Terminal output**: `picocolors` for color. JSON output when `--json` is passed or stdout is non-TTY.
 
 Confirm with the user before adding heavier deps (chart renderers, FFmpeg wrappers, native bindings).
 
 ## Commands
 
 - `bun install`
-- `bun run dev <subcommand> ...` — run CLI from source
+- `bun run dev <subcommand> ...` — run CLI from source under Bun
 - `bun test` — all tests; `bun test path/to/file.test.ts` for one file
-- `bun run typecheck` — `tsc --noEmit`
-- `bun run build` — single-file binary via `bun build --compile`
+- `bun run lint` / `bun run format` — Biome
+- `bun run build` — produce `dist/index.js` (Node ESM bundle, executable)
+- `node dist/index.js <subcommand>` — run the built artifact under Node
+
+## Publishing
+
+- npm package: `lapvisor`. `files: ["dist"]` ships only the bundle.
+- `prepublishOnly` enforces lint + test + build.
+- GitHub Actions (`.github/workflows/release.yml`) publishes on `vX.Y.Z` tag push: it verifies `tag == package.json version`, runs `npm publish` with `NPM_TOKEN`, and creates a GitHub release. Required repo secret: `NPM_TOKEN`.
+- CI (`.github/workflows/ci.yml`) runs lint + build + test on every push/PR to `main`.
 
 ## Architecture (three layers)
 

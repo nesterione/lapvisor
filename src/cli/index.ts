@@ -1,14 +1,16 @@
-#!/usr/bin/env bun
 import { defineCommand, runMain } from "citty";
+import laps from "./commands/laps.js";
+
+declare const PACKAGE_VERSION: string;
 
 const main = defineCommand({
   meta: {
     name: "lapvisor",
-    version: "0.0.1",
+    version: typeof PACKAGE_VERSION !== "undefined" ? PACKAGE_VERSION : "0.0.0",
     description: "Race data analysis from the terminal — agent-friendly.",
   },
   subCommands: {
-    laps: () => import("./commands/laps").then((m) => m.default),
+    laps,
   },
 });
 
