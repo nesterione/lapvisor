@@ -2,75 +2,43 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
+## Project
 
-This is a GoPro kart racing video processing toolkit written in Python 3. The project processes racing session videos by splitting them into individual lap clips and creating side-by-side comparison videos.
+`lapvisor` is a CLI for race data analysis — RaceChrono Analytics in a terminal, designed to be driven by AI agents as well as humans. Target use case: hobby karting and amateur motorsport. Outputs are agent-friendly (machine-readable JSON alongside human-formatted views).
 
-## Core Components
+## Stack
 
-### kart_splitter.py
-Main script for splitting GoPro videos into individual lap clips with timing overlays.
+- **Runtime / bundler / test runner**: Bun (>=1.1). One tool for `bun run`, `bun test`, `bun build`. Prefer Bun built-ins (`Bun.file`, `Bun.spawn`, `Bun.$`) over Node shims.
+- **Language**: TypeScript, strict mode. Bun runs `.ts` directly — no `tsc` build step in development; use `tsc --noEmit` only for typechecking.
+- **CLI framework**: `citty` (UnJS) for nested subcommands. Fall back to `commander` only if `citty` proves limiting.
+- **Validation**: `zod` for user input and external file parsing.
+- **Terminal output**: `picocolors` for color, plain string tables or `cli-table3` for tabular views. JSON output when `--json` is passed (default for non-TTY).
 
-**Key functionality:**
-- Parses timestamps in various formats (seconds, MM:SS, HH:MM:SS)
-- Reads lap times from CSV files or comma-separated values
-- Uses FFmpeg to extract video segments with timing overlays
-- Automatically calculates segment boundaries based on first lap timestamp and lap durations
+Confirm with the user before adding heavier deps (chart renderers, FFmpeg wrappers, native bindings).
 
-### lap_compare.py
-Creates side-by-side comparison videos of selected laps from the same session.
+## Commands
 
-**Key functionality:**
-- Supports 2-4 lap comparisons in grid layout
-- Synchronized playback with individual lap timing overlays
-- Audio mixing options (left channel only, mixed, or none)
-- Dynamic video resizing and padding
+- `bun install`
+- `bun run dev <subcommand> ...` — run CLI from source
+- `bun test` — all tests; `bun test path/to/file.test.ts` for one file
+- `bun run typecheck` — `tsc --noEmit`
+- `bun run build` — single-file binary via `bun build --compile`
 
-## Dependencies
+## Architecture (three layers)
 
-**Required external tools:**
-- FFmpeg (for video processing)
-- Python 3.12+ with standard library modules
+1. **Adapters** (`src/adapters/`) — read input formats and normalize to a common `Session` shape. Targets: RaceChrono CSV export, GPX, FIT (Garmin), TCX, plain lap-time CSV. Every adapter returns the same model; analysis code never sees raw formats.
+2. **Analysis** (`src/analysis/`) — pure functions over `Session`: lap stats, sector splits, line/speed comparisons, consistency metrics. No I/O.
+3. **CLI + Skills** (`src/cli/`, `src/skills/`) — subcommands compose adapters + analysis. *Skills* are higher-level recipes meant to be invoked by an AI agent (e.g. "find the slowest sector"); each skill emits structured JSON by default and human output behind a flag.
 
-**Python modules used:**
-- argparse, csv, json, math, os, subprocess, sys, pathlib
+Race data files (`*.csv`, `*.gpx`, `*.fit`) go in a gitignored `data/` directory; small samples for tests in `tests/fixtures/`. Never commit user race data.
 
-## Common Usage Patterns
+## Domain notes
 
-### Split session into lap clips
-```bash
-python3 kart_splitter.py \
-  --video GOPR2000.MP4 \
-  --first-lap 2:05.000 \
-  --laps-csv laps_1.csv \
-  --outdir laps_out
-```
+- A *session* is one outing; it contains many *laps*. Lap timing is the primary signal; GPS + speed traces are secondary.
+- Lap-time inputs are messy — accept seconds (`43.605`), `MM:SS.mmm`, `HH:MM:SS.mmm`. Centralize parsing; don't scatter regex across adapters.
+- "First-lap timestamp + lap durations" is a common input pattern (one of several adapters), not the core model.
+- AI-agent-friendliness means: stable JSON schema for outputs, meaningful exit codes, errors as structured objects under `--json`, and no interactive prompts when stdin is not a TTY.
 
-### Create lap comparison video
-```bash
-python3 lap_compare.py \
-  --video GOPR2000.MP4 \
-  --first-lap 2:05.000 \
-  --laps-csv laps_1.csv \
-  --select 10,11 \
-  --out compare_10_vs_11.mp4 \
-  --audio left
-```
+## Task tracking
 
-## File Structure
-
-- `*.MP4` - GoPro video files
-- `laps_*.csv` - Lap timing data in CSV format (headers: lap,time)
-- `laps_out/` - Output directory for individual lap clips
-- `compare_*.mp4` - Generated comparison videos
-
-## Time Format Support
-
-Both scripts support flexible timestamp parsing:
-- Seconds: `43.605`
-- Minutes:seconds: `01:23.456`
-- Hours:minutes:seconds: `01:02:34.567`
-
-## CSV Format
-
-Lap timing CSV files should have headers with timing columns named: `time`, `laptime`, `lap_time`, or `duration`. Falls back to second column if headers not recognized.
+`.jobdone/` is a committed local task tracker (config in `.jobdone/config.yaml`; files under `.jobdone/tasks/{todo,doing,done}/`). Respect its conventions when adding tasks.

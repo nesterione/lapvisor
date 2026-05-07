@@ -1,0 +1,19 @@
+version: 2
+fields:
+  status:
+    - backlog
+    - todo
+    - done
+    - archive
+  priority:
+    - low
+    - medium
+    - high
+defaults:
+  priority: medium
+  template: |
+    ---
+    title: {{ title }}
+    priority: {{ priority }}
+    created: {{ date }}
+    ---
