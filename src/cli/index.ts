@@ -1,5 +1,7 @@
 import { defineCommand, runMain } from "citty";
 import laps from "./commands/laps.js";
+import session from "./commands/session.js";
+import track from "./commands/track.js";
 
 declare const PACKAGE_VERSION: string;
 
@@ -11,6 +13,8 @@ const main = defineCommand({
   },
   subCommands: {
     laps,
+    session,
+    track,
   },
 });
 
