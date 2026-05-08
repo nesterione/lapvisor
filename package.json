@@ -1,7 +1,7 @@
 {
   "name": "lapvisor",
-  "version": "0.0.2",
-  "description": "CLI for race data analysis — lap times, GPS telemetry, sector splits. Agent-friendly.",
+  "version": "0.1.0",
+  "description": "CLI for race data analysis — lap times, GPS telemetry, sector splits, track tooling. Agent-friendly.",
   "type": "module",
   "files": [
     "dist"
@@ -30,6 +30,8 @@
     "karting",
     "telemetry",
     "lap-times",
+    "track-tools",
+    "geojson",
     "cli",
     "ai",
     "agent"

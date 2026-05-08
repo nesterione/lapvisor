@@ -1,0 +1,365 @@
+{
+  "type": "FeatureCollection",
+  "name": "of Plytines ihar 2026",
+  "properties": {
+    "schema": "kart-track/v1",
+    "source": {
+      "format": "racechrono",
+      "file": "track_of_plytines_ihar_2026.rcz"
+    },
+    "center": [
+      25.3499651,
+      54.7255092
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.3490988,
+            54.7253114
+          ],
+          [
+            25.3494098,
+            54.725302
+          ]
+        ]
+      },
+      "properties": {
+        "id": "sf",
+        "kind": "start_finish",
+        "name": "S/F",
+        "order": 0,
+        "bearing_deg": 3,
+        "width_m": 20,
+        "unidirectional": true,
+        "center": [
+          25.3492543,
+          54.7253067
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.3498635,
+            54.7262781
+          ],
+          [
+            25.3500041,
+            54.7261703
+          ]
+        ]
+      },
+      "properties": {
+        "id": "trap-1",
+        "kind": "sector",
+        "name": "Main straight",
+        "order": 1,
+        "bearing_deg": 53,
+        "width_m": 15,
+        "unidirectional": true,
+        "center": [
+          25.3499338,
+          54.7262242
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.3505185,
+            54.7257641
+          ],
+          [
+            25.3502849,
+            54.7257665
+          ]
+        ]
+      },
+      "properties": {
+        "id": "trap-2",
+        "kind": "sector",
+        "name": "High-speed corner",
+        "order": 2,
+        "bearing_deg": 181,
+        "width_m": 15,
+        "unidirectional": true,
+        "center": [
+          25.3504017,
+          54.7257653
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.3500082,
+            54.7257653
+          ],
+          [
+            25.3502418,
+            54.7257653
+          ]
+        ]
+      },
+      "properties": {
+        "id": "trap-3",
+        "kind": "sector",
+        "name": "Hairpin",
+        "order": 3,
+        "bearing_deg": 0,
+        "width_m": 15,
+        "unidirectional": true,
+        "center": [
+          25.350125,
+          54.7257653
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.3496502,
+            54.7254156
+          ],
+          [
+            25.3494178,
+            54.7254014
+          ]
+        ]
+      },
+      "properties": {
+        "id": "trap-4",
+        "kind": "sector",
+        "name": "Sweeper",
+        "order": 4,
+        "bearing_deg": 174,
+        "width_m": 15,
+        "unidirectional": true,
+        "center": [
+          25.349534,
+          54.7254085
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.350338,
+            54.7252188
+          ],
+          [
+            25.350154,
+            54.7253018
+          ]
+        ]
+      },
+      "properties": {
+        "id": "trap-5",
+        "kind": "sector",
+        "name": "Esses",
+        "order": 5,
+        "bearing_deg": 218,
+        "width_m": 15,
+        "unidirectional": true,
+        "center": [
+          25.350246,
+          54.7252603
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.3505569,
+            54.7261825
+          ],
+          [
+            25.3502477,
+            54.7261605
+          ]
+        ]
+      },
+      "properties": {
+        "id": "trap-6",
+        "kind": "sector",
+        "name": "New trap",
+        "order": 6,
+        "bearing_deg": 173,
+        "width_m": 20,
+        "unidirectional": true,
+        "center": [
+          25.3504023,
+          54.7261715
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.3500117,
+            54.7259568
+          ],
+          [
+            25.3502453,
+            54.7259592
+          ]
+        ]
+      },
+      "properties": {
+        "id": "trap-7",
+        "kind": "sector",
+        "name": "New trap (1)",
+        "order": 7,
+        "bearing_deg": 359,
+        "width_m": 15,
+        "unidirectional": true,
+        "center": [
+          25.3501285,
+          54.725958
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.3498875,
+            54.725391
+          ],
+          [
+            25.3500409,
+            54.7253754
+          ]
+        ]
+      },
+      "properties": {
+        "id": "trap-8",
+        "kind": "sector",
+        "name": "New trap (2)",
+        "order": 8,
+        "bearing_deg": 10,
+        "width_m": 10,
+        "unidirectional": true,
+        "center": [
+          25.3499642,
+          54.7253832
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.3504254,
+            54.7248101
+          ],
+          [
+            25.3501936,
+            54.7248265
+          ]
+        ]
+      },
+      "properties": {
+        "id": "trap-9",
+        "kind": "sector",
+        "name": "New trap (3)",
+        "order": 9,
+        "bearing_deg": 187,
+        "width_m": 15,
+        "unidirectional": true,
+        "center": [
+          25.3503095,
+          54.7248183
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.3496684,
+            54.724829
+          ],
+          [
+            25.349902,
+            54.7248314
+          ]
+        ]
+      },
+      "properties": {
+        "id": "trap-10",
+        "kind": "sector",
+        "name": "New trap (4)",
+        "order": 10,
+        "bearing_deg": 359,
+        "width_m": 15,
+        "unidirectional": true,
+        "center": [
+          25.3497852,
+          54.7248302
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            25.3494779,
+            54.7251522
+          ],
+          [
+            25.3495145,
+            54.7252854
+          ]
+        ]
+      },
+      "properties": {
+        "id": "trap-11",
+        "kind": "sector",
+        "name": "Last pivot exit ",
+        "order": 11,
+        "bearing_deg": 279,
+        "width_m": 15,
+        "unidirectional": true,
+        "center": [
+          25.3494962,
+          54.7252188
+        ]
+      }
+    }
+  ]
+}
