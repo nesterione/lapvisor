@@ -2,7 +2,7 @@
 
 A CLI for race data analysis — lap times, GPS telemetry, sector splits — designed to be driven by AI agents as well as humans. Aimed at hobby karting and amateur motorsport.
 
-> **Status:** early scaffold. The CLI surface and project layout are in place. The VBO adapter parses RaceBox / Racelogic VBOX files end-to-end and lap detection from gate crossings works against real telemetry; neither is yet wired into a CLI subcommand.
+> **Status:** early scaffold. `lapvisor laps <file.vbo>` works end-to-end against RaceBox / Racelogic VBOX files: parses the file, detects laps from gate crossings, and emits a summary (human or JSON). Other formats and richer per-lap analysis are planned.
 
 ## Install
 
@@ -34,28 +34,44 @@ node dist/index.js --help         # run the built artifact
 
 | Command | Status | Description |
 | --- | --- | --- |
-| `laps <file>` | scaffolded | Summarize lap times from a session file |
+| `laps <file>` | working for `.vbo` | Parse, detect laps from gate crossings, summarize (count, best, mean, venue, started-at). |
 
-Pass `--json` (or pipe stdout) to get machine-readable output.
+```sh
+lapvisor laps session.vbo            # human-readable summary
+lapvisor laps session.vbo --json     # JSON (also emitted when stdout is not a TTY)
+```
+
+Sample output (RaceBox karting session, 9 laps, ~12 k samples, ~50 ms total):
+
+```json
+{
+  "source": "session.vbo",
+  "format": "vbo",
+  "lapCount": 9,
+  "meta": { "venue": "Plytines", "startedAt": "2026-05-05T16:35:00.000Z", "sampleCount": 11794 },
+  "bestMs": 44058.378,
+  "meanMs": 44517
+}
+```
 
 ## Adapters
 
 | Format | Status | Notes |
 | --- | --- | --- |
-| `.vbo` (Racelogic VBOX / RaceBox) | parser ready | See [docs/formats/vbo.md](./docs/formats/vbo.md). Parser at [`src/adapters/vbo.ts`](./src/adapters/vbo.ts); not yet wired into a CLI subcommand. |
+| `.vbo` (Racelogic VBOX / RaceBox) | working | Parser: [`src/adapters/vbo.ts`](./src/adapters/vbo.ts) · Reference: [docs/formats/vbo.md](./docs/formats/vbo.md). |
 | `.gpx`, `.fit`, `.tcx`, lap-time CSV | planned | — |
 
 ## Analysis
 
 | Capability | Status | Notes |
 | --- | --- | --- |
-| Lap detection from gate crossings | working | Sub-sample timestamp interpolation + direction lock + sats/velocity/min-lap filters. See [docs/analysis/laps.md](./docs/analysis/laps.md). Runs in ~5 ms over 12 k samples. |
+| Lap detection from gate crossings | working | Sub-sample timestamp interpolation + direction lock + sats/velocity/min-lap filters. See [docs/analysis/laps.md](./docs/analysis/laps.md). |
 | Per-lap stats (top speed, peak G, …) | planned | — |
 | Sector splits from `Split` gates | planned | — |
 
 ## Programmatic use
 
-Until a CLI subcommand wires it up:
+The lower-level building blocks are available directly:
 
 ```ts
 import { readFileSync } from "node:fs";
@@ -63,7 +79,7 @@ import { parseVbo } from "./src/adapters/vbo.js";
 import { detectLaps } from "./src/analysis/laps.js";
 
 const file = parseVbo(readFileSync("session.vbo", "utf8"), "session.vbo");
-const { laps } = detectLaps(file.samples, file.gates);
+const { laps, crossings, rejected } = detectLaps(file.samples, file.gates);
 
 for (const l of laps) {
   console.log(`L${l.index}: ${(l.durationMs / 1000).toFixed(3)} s`);
