@@ -140,7 +140,7 @@ Save: click *Save* or press Cmd/Ctrl-S. The server validates the schema tag, rec
 
 ## Track format
 
-`kart-track/v1` GeoJSON is owned by lapvisor — schema, builder (`track create`), and visual editor (`track edit`). Spec: [`docs/formats/kart-track-v1.md`](./docs/formats/kart-track-v1.md). Design notes: [`docs/decisions/0001-track-format.md`](./docs/decisions/0001-track-format.md), [`docs/decisions/0002-track-editor.md`](./docs/decisions/0002-track-editor.md).
+`kart-track/v1` GeoJSON is owned by lapvisor — schema, builder (`track create`), and visual editor (`track edit`). Spec: [`docs/formats/kart-track-v1.md`](./docs/formats/kart-track-v1.md). Design notes (ADRs) live in the companion private `karting` repo under `docs/decisions/`.
 
 ## Programmatic use
 
@@ -166,7 +166,6 @@ Concise reference notes that complement the code live under [`docs/`](./docs/):
 
 - [`docs/formats/vbo.md`](./docs/formats/vbo.md), [`docs/formats/kart-track-v1.md`](./docs/formats/kart-track-v1.md)
 - [`docs/analysis/laps.md`](./docs/analysis/laps.md)
-- [`docs/decisions/0001-track-format.md`](./docs/decisions/0001-track-format.md), [`docs/decisions/0002-track-editor.md`](./docs/decisions/0002-track-editor.md)
 
 ## License
 
