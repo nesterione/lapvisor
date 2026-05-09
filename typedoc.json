@@ -1,0 +1,21 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "src/sdk/model.ts",
+    "src/sdk/adapters.ts",
+    "src/sdk/analysis.ts",
+    "src/sdk/bundles.ts",
+    "src/sdk/track.ts",
+    "src/sdk/time.ts"
+  ],
+  "tsconfig": "./tsconfig.docs.json",
+  "out": "docs/api",
+  "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
+  "readme": "none",
+  "githubPages": false,
+  "hideGenerator": true,
+  "excludeInternal": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "sort": ["source-order"]
+}

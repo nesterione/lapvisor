@@ -62,4 +62,4 @@ Use the pure variants in browsers and any environment where you've already fetch
 - Stability and TSDoc tiers: [`./stability.md`](./stability.md)
 - Wire formats: [`../formats/`](../formats/)
 - Adding new adapters / analysis / bundle versions: [`../extending/`](../extending/)
-- Runnable examples: [`/examples/`](../../examples/)
+- Runnable examples: [on GitHub](https://github.com/nesterione/lapvisor/tree/main/examples)

@@ -67,4 +67,4 @@ const track = buildKartTrack(intent);
 
 ## More
 
-Runnable variants of every snippet here live in [`/examples/`](../../examples/).
+Runnable variants of every snippet here live in [`/examples/`](https://github.com/nesterione/lapvisor/tree/main/examples) on GitHub.

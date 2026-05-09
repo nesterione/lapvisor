@@ -54,6 +54,10 @@
     "test": "bun test",
     "lint": "biome check src",
     "format": "biome format --write src",
+    "docs:api": "typedoc",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "bun run docs:api && vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "prepublishOnly": "bun run lint && bun test && bun run build"
   },
   "keywords": [
@@ -79,6 +83,10 @@
     "@types/bun": "latest",
     "@types/node": "^22.0.0",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
+    "typedoc": "^0.28.19",
+    "typedoc-plugin-markdown": "4.10.0",
+    "typedoc-vitepress-theme": "^1.1.2",
+    "typescript": "^5.9.3",
+    "vitepress": "^1.6.4"
   }
 }
