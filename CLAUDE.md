@@ -35,6 +35,8 @@ Confirm with the user before adding heavier deps (chart renderers, FFmpeg wrappe
 - `bun run lint` / `bun run format` — Biome
 - `bun run build` — produces `dist/cli.js` + `dist/sdk/*.{js,d.ts}`
 - `node dist/cli.js <subcommand>` — run the built CLI under Node
+- `bun run docs:dev` — VitePress local preview at `http://localhost:5173/lapvisor/`
+- `bun run docs:build` — TypeDoc + VitePress full build (catches dead links / TSDoc errors locally before CI does)
 
 ## Publishing
 
@@ -70,12 +72,28 @@ Race data files (`*.csv`, `*.gpx`, `*.fit`) go in a gitignored `data/` directory
 
 ## Documentation
 
+The published site is built by VitePress + TypeDoc and deployed to GitHub Pages on every push to `main` via `.github/workflows/docs.yml`.
+
 - [`docs/sdk/`](./docs/sdk/) — SDK overview, quickstart, stability tiers (TSDoc policy).
 - [`docs/cli/`](./docs/cli/) — CLI reference for humans and agents.
 - [`docs/formats/`](./docs/formats/) — wire-format specs (versioned, public contracts).
 - [`docs/extending/`](./docs/extending/) — guides for adding adapters, analyses, bundle versions.
 - [`docs/analysis/`](./docs/analysis/) — analysis-function notes (geometry, filters).
+- [`docs/api/`](./docs/api/) — **generated** by TypeDoc from `src/sdk/*.ts`. Gitignored. Do not hand-edit.
 - [`examples/`](./examples/) — runnable SDK examples, paired with `tests/examples/`.
+
+## Docs contribution
+
+Docs are part of the contract — keep them current with code. When you:
+
+- **Add a new SDK export** to a Tier-1 module: write Tier-1 TSDoc (description, `@param`, `@returns`, `@throws` where non-trivial, `@example` on entry points, `@see` to the format spec where relevant). Tier rules: [`docs/sdk/stability.md`](./docs/sdk/stability.md).
+- **Add a new adapter** (GPX, FIT, TCX, lap-CSV, …): follow the checklist in [`docs/extending/adapter.md`](./docs/extending/adapter.md). Updates required: adapter table row in `README.md`, new `docs/formats/<format>.md` spec, fixture under `tests/fixtures/<format>/`, the dispatch `switch` cases in `src/adapters/index.ts`, and the SDK barrel re-export in `src/sdk/adapters.ts`.
+- **Add a new analysis function**: follow [`docs/extending/analysis.md`](./docs/extending/analysis.md). Add a `docs/analysis/<name>.md` long-form note when the geometry, filter logic, or known limits are non-trivial.
+- **Add or evolve a bundle version**: follow [`docs/extending/bundle-version.md`](./docs/extending/bundle-version.md). Create `docs/formats/<family>-v<N>.md`; mark the previous producer `@deprecated` but keep exporting it; never silently mutate an existing schema.
+- **Add a CLI subcommand or flag**: update [`docs/cli/overview.md`](./docs/cli/overview.md) (or split into per-command pages if it grows). The CLI's JSON output is the contract — its human-readable output is not.
+- **Add a notable SDK usage pattern**: drop a runnable file under `examples/`, paired with `tests/examples/<name>.test.ts`, and link it from [`docs/sdk/quickstart.md`](./docs/sdk/quickstart.md) when it deserves a place there.
+
+If a change touches a sidebar entry (new section under `docs/`), also update `docs/.vitepress/config.ts`. Run `bun run docs:build` before committing significant doc work — the build catches dead links and TypeDoc errors that would otherwise only surface on the CI deploy.
 
 ## Domain notes
 
