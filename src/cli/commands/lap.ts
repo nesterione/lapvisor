@@ -127,7 +127,9 @@ export default defineCommand({
 
     const lapIndex = Number(args.index);
     if (!Number.isInteger(lapIndex) || lapIndex < 1) {
-      throw new Error(`lap index must be a positive integer, got "${args.index}"`);
+      throw new Error(
+        `lap index must be a positive integer, got "${args.index}"`,
+      );
     }
 
     const text = await readFile(args.input, "utf8");
@@ -149,7 +151,9 @@ export default defineCommand({
     }
 
     const sectorGates = detectionGates.filter((g) => g.kind === "split");
-    const allSectorSplits = detectSectorSplits(file.samples, sectorGates, [lap]);
+    const allSectorSplits = detectSectorSplits(file.samples, sectorGates, [
+      lap,
+    ]);
     const lapSectorSplits = allSectorSplits[0];
 
     const detail = extractLap(file.samples, lap, lapSectorSplits);
@@ -166,7 +170,9 @@ export default defineCommand({
       samples: detail.samples,
       sectors: detail.sectors,
       aggregates: detail.aggregates,
-      gates: kartTrack ? gatesFromTrack(kartTrack) : gatesFromVbo(detectionGates),
+      gates: kartTrack
+        ? gatesFromTrack(kartTrack)
+        : gatesFromVbo(detectionGates),
     };
 
     const useJson = args.json || !process.stdout.isTTY;
@@ -175,9 +181,14 @@ export default defineCommand({
       return;
     }
 
-    console.log(pc.bold(`Lap ${bundle.lap.index} — ${formatLapTime(bundle.lap.durationMs)}`));
+    console.log(
+      pc.bold(
+        `Lap ${bundle.lap.index} — ${formatLapTime(bundle.lap.durationMs)}`,
+      ),
+    );
     if (bundle.meta.venue) console.log(`Venue:    ${bundle.meta.venue}`);
-    if (bundle.meta.trackName) console.log(`Track:    ${bundle.meta.trackName}`);
+    if (bundle.meta.trackName)
+      console.log(`Track:    ${bundle.meta.trackName}`);
     console.log(`Distance: ${bundle.lap.distanceM.toFixed(1)} m`);
     console.log(`Samples:  ${bundle.samples.length}`);
     console.log(`Sectors:  ${bundle.sectors.length}`);

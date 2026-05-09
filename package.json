@@ -1,6 +1,6 @@
 {
   "name": "lapvisor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "CLI for race data analysis — lap times, GPS telemetry, sector splits, track tooling. Agent-friendly.",
   "type": "module",
   "files": [

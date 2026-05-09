@@ -8,8 +8,8 @@
  */
 
 import type { VboSample } from "../adapters/vbo.js";
-import { cumulativeDistance } from "./distance.js";
 import { type LapAggregates, lapAggregates } from "./aggregates.js";
+import { cumulativeDistance } from "./distance.js";
 import type { DetectedLap } from "./laps.js";
 import type { LapSectorSplits } from "./sectors.js";
 
@@ -76,7 +76,8 @@ export function extractLap(
   });
 
   const aggregates = roundAggregates(lapAggregates(slice));
-  const totalDistance = distances.length > 0 ? (distances[distances.length - 1] ?? 0) : 0;
+  const totalDistance =
+    distances.length > 0 ? (distances[distances.length - 1] ?? 0) : 0;
 
   const out: LapDetail = {
     lap: {
@@ -94,7 +95,11 @@ export function extractLap(
   return out;
 }
 
-function toRichSample(s: VboSample, lapStartMs: number, distance: number): RichSample {
+function toRichSample(
+  s: VboSample,
+  lapStartMs: number,
+  distance: number,
+): RichSample {
   const r: RichSample = {
     t: Math.round(s.timeOfDayMs - lapStartMs),
     lat: round7(s.latDeg),
@@ -114,7 +119,8 @@ function toRichSample(s: VboSample, lapStartMs: number, distance: number): RichS
 
 function findFirstSampleAfter(samples: RichSample[], tMs: number): number {
   for (let i = 0; i < samples.length; i++) {
-    if (samples[i]!.t >= tMs) return i;
+    const s = samples[i];
+    if (s && s.t >= tMs) return i;
   }
   return Math.max(0, samples.length - 1);
 }
