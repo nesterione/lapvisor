@@ -37,6 +37,7 @@ bun link                          # expose `lapvisor` on PATH for local consumer
 | --- | --- |
 | `laps <file>` | Parse a session, detect laps from gate crossings, emit a summary (count, best, mean, venue). |
 | `session <file>` | Emit a complete render bundle (samples + laps + sectors + gates) as JSON for downstream UIs. |
+| `lap <file> <index>` | Emit one lap as a `lapvisor-lap/v1` bundle (rich telemetry + cumulative distance + sectors + per-lap aggregates) for distance-aligned cross-driver comparison. |
 | `track create` | Build a `kart-track/v1` GeoJSON file from a structured gate description (stdin or `--input`). |
 | `track edit <file>` | Open a local browser editor for a `kart-track/v1` file (drag gates, edit name/kind/bearing/width, atomic save). |
 

@@ -1,4 +1,5 @@
 import { defineCommand, runMain } from "citty";
+import lap from "./commands/lap.js";
 import laps from "./commands/laps.js";
 import session from "./commands/session.js";
 import track from "./commands/track.js";
@@ -14,6 +15,7 @@ const main = defineCommand({
   subCommands: {
     laps,
     session,
+    lap,
     track,
   },
 });
