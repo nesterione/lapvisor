@@ -1,10 +1,14 @@
 {
   "name": "lapvisor",
-  "version": "0.2.0",
-  "description": "CLI for race data analysis — lap times, GPS telemetry, sector splits, track tooling. Agent-friendly.",
+  "version": "0.3.0",
+  "description": "Race data toolkit (SDK + CLI) — lap times, GPS telemetry, sector splits, track tooling. Agent-friendly.",
   "type": "module",
+  "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "docs/formats",
+    "README.md",
+    "LICENSE"
   ],
   "engines": {
     "node": ">=22"
@@ -15,7 +19,34 @@
     "url": "https://github.com/nesterione/lapvisor"
   },
   "bin": {
-    "lapvisor": "./dist/index.js"
+    "lapvisor": "./dist/cli.js"
+  },
+  "exports": {
+    "./model": {
+      "types": "./dist/sdk/model.d.ts",
+      "import": "./dist/sdk/model.js"
+    },
+    "./adapters": {
+      "types": "./dist/sdk/adapters.d.ts",
+      "import": "./dist/sdk/adapters.js"
+    },
+    "./analysis": {
+      "types": "./dist/sdk/analysis.d.ts",
+      "import": "./dist/sdk/analysis.js"
+    },
+    "./bundles": {
+      "types": "./dist/sdk/bundles.d.ts",
+      "import": "./dist/sdk/bundles.js"
+    },
+    "./track": {
+      "types": "./dist/sdk/track.d.ts",
+      "import": "./dist/sdk/track.js"
+    },
+    "./time": {
+      "types": "./dist/sdk/time.d.ts",
+      "import": "./dist/sdk/time.js"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "dev": "bun run src/cli/index.ts",
@@ -32,6 +63,7 @@
     "lap-times",
     "track-tools",
     "geojson",
+    "sdk",
     "cli",
     "ai",
     "agent"

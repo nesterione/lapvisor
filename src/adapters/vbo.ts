@@ -95,6 +95,23 @@ function canonicalChannel(token: string): string {
   return CHANNEL_ALIASES[key] ?? key;
 }
 
+/**
+ * Parse a Racelogic VBOX text file. Pure function — takes the file content as
+ * a string, returns a typed object. No file I/O, browser-safe.
+ *
+ * @param text - The full `.vbo` file content.
+ * @param source - Label used in error messages and stored on the returned `VboFile`.
+ * @returns A parsed `VboFile` (samples, gates, comments, channel layout).
+ * @throws {VboParseError} on structural problems (missing sections, bad coords, etc.).
+ * @see {@link ../../docs/formats/vbo.md | docs/formats/vbo.md}
+ * @example
+ * ```ts
+ * import { parseVbo } from "lapvisor/adapters";
+ * import { readFile } from "node:fs/promises";
+ * const file = parseVbo(await readFile("session.vbo", "utf8"), "session.vbo");
+ * console.log(file.samples.length, "samples,", file.gates.length, "gates");
+ * ```
+ */
 export function parseVbo(text: string, source = "<input>"): VboFile {
   const lines = text.split(/\r?\n/);
 

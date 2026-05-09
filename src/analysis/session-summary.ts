@@ -37,6 +37,15 @@ export interface SessionSummary {
   sectorCount: number;
 }
 
+/**
+ * Compact a {@link LapDetail} into the summary shape used by
+ * `lapvisor-session/v2`. Splits sector cumulative offsets into per-segment
+ * durations and appends a synthetic `"Finish"` segment when sectors are
+ * present. Pure.
+ *
+ * @param detail - Per-lap detail produced by `extractLap`.
+ * @returns The lap's summary block (sectors, aggregates, totals).
+ */
 export function summarizeLap(detail: LapDetail): SessionLapSummary {
   const sectors: SessionSummarySector[] = [];
   let prevOffsetMs = 0;
@@ -79,6 +88,14 @@ export function summarizeLap(detail: LapDetail): SessionLapSummary {
   return summary;
 }
 
+/**
+ * Aggregate per-lap summaries into a session-level summary: best lap,
+ * per-sector best splits across all laps, and the theoretical-best lap time
+ * (sum of best per-sector splits). Pure.
+ *
+ * @param lapSummaries - One entry per detected lap.
+ * @returns Session-level best-of metrics.
+ */
 export function buildSessionSummary(
   lapSummaries: SessionLapSummary[],
 ): SessionSummary {

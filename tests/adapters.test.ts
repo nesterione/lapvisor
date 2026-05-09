@@ -1,8 +1,15 @@
+import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { describe, expect, test } from "bun:test";
-import { loadSession, UnsupportedFormatError } from "../src/adapters/index.js";
+import {
+  loadSession,
+  loadSessionFromText,
+  UnsupportedFormatError,
+} from "../src/adapters/index.js";
 
-const fixturePath = fileURLToPath(new URL("./fixtures/sample.vbo", import.meta.url));
+const fixturePath = fileURLToPath(
+  new URL("./fixtures/sample.vbo", import.meta.url),
+);
 
 describe("loadSession", () => {
   test("dispatches .vbo to the VBO adapter and produces a Session", async () => {
@@ -19,6 +26,30 @@ describe("loadSession", () => {
   });
 
   test("throws UnsupportedFormatError for unknown extensions", async () => {
-    await expect(loadSession("foo.xyz")).rejects.toThrow(UnsupportedFormatError);
+    await expect(loadSession("foo.xyz")).rejects.toThrow(
+      UnsupportedFormatError,
+    );
+  });
+});
+
+describe("loadSessionFromText", () => {
+  test("parses VBO text without touching the filesystem", async () => {
+    const text = await readFile(fixturePath, "utf8");
+    const session = loadSessionFromText(text, "vbo", { source: "memory.vbo" });
+    expect(session.format).toBe("vbo");
+    expect(session.source).toBe("memory.vbo");
+    expect(session.meta?.venue).toBe("TestTrack");
+  });
+
+  test("defaults source to <input> when none is provided", async () => {
+    const text = await readFile(fixturePath, "utf8");
+    const session = loadSessionFromText(text, "vbo");
+    expect(session.source).toBe("<input>");
+  });
+
+  test("throws UnsupportedFormatError for unsupported formats", () => {
+    expect(() => loadSessionFromText("", "gpx")).toThrow(
+      UnsupportedFormatError,
+    );
   });
 });

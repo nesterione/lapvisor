@@ -8,6 +8,7 @@
  */
 
 import type { VboSample } from "../adapters/vbo.js";
+import { round1, round3, round7 } from "../util/rounding.js";
 import { type LapAggregates, lapAggregates } from "./aggregates.js";
 import { cumulativeDistance } from "./distance.js";
 import type { DetectedLap } from "./laps.js";
@@ -53,6 +54,27 @@ export interface LapDetail {
   aggregates: LapAggregates;
 }
 
+/**
+ * Build a {@link LapDetail} for one lap: samples re-indexed from 0 with the
+ * absolute lap-start time subtracted, cumulative distance attached, sector
+ * boundaries mapped to in-lap sample indices, plus per-lap aggregates.
+ *
+ * Pure function. Used by {@link "../bundles/lap-v1.js".buildLapBundle} to
+ * assemble a `lapvisor-lap/v1` bundle.
+ *
+ * @param allSamples - The full session sample stream.
+ * @param lap - One detected lap (its inclusive sample range is sliced out).
+ * @param sectorSplits - Optional sector-split offsets for this lap; produces
+ *   `lap.sectors[]` when provided.
+ * @returns Per-lap detail with rich samples, sector boundaries, and aggregates.
+ * @example
+ * ```ts
+ * import { detectLaps, detectSectorSplits, extractLap } from "lapvisor/analysis";
+ * const { laps } = detectLaps(file.samples, file.gates);
+ * const splits = detectSectorSplits(file.samples, sectorGates, laps);
+ * const detail = extractLap(file.samples, laps[0], splits[0]);
+ * ```
+ */
 export function extractLap(
   allSamples: VboSample[],
   lap: DetectedLap,
@@ -123,18 +145,6 @@ function findFirstSampleAfter(samples: RichSample[], tMs: number): number {
     if (s && s.t >= tMs) return i;
   }
   return Math.max(0, samples.length - 1);
-}
-
-function round1(v: number): number {
-  return Math.round(v * 10) / 10;
-}
-
-function round3(v: number): number {
-  return Math.round(v * 1000) / 1000;
-}
-
-function round7(v: number): number {
-  return Math.round(v * 1e7) / 1e7;
 }
 
 function roundAggregates(a: LapAggregates): LapAggregates {

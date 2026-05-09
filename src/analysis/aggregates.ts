@@ -8,6 +8,10 @@
 
 import type { VboSample } from "../adapters/vbo.js";
 
+/**
+ * Per-lap scalar aggregates produced by {@link lapAggregates}. Full precision;
+ * round at presentation time. Absent input channels yield `0`.
+ */
 export interface LapAggregates {
   topSpeedKmh: number;
   minSpeedKmh: number;

@@ -73,6 +73,25 @@ export class NoStartGateError extends Error {
   }
 }
 
+/**
+ * Detect laps from a time-ordered stream of GPS samples and a set of gates.
+ *
+ * Pure function — no I/O. Geometry, filters, and known limits are documented
+ * in {@link ../../docs/analysis/laps.md | docs/analysis/laps.md}.
+ *
+ * @param samples - Time-ordered samples. Must be sorted by `timeOfDayMs`.
+ * @param gates - At least one gate with `kind: "start"` is required.
+ * @param opts - Filter overrides; defaults debounce 5 s and require a GPS fix.
+ * @returns Detected laps, accepted crossings, and rejected-crossing diagnostics.
+ * @throws {NoStartGateError} when `gates` contains no start gate.
+ * @example
+ * ```ts
+ * import { parseVbo } from "lapvisor/adapters";
+ * import { detectLaps } from "lapvisor/analysis";
+ * const file = parseVbo(text);
+ * const { laps } = detectLaps(file.samples, file.gates);
+ * ```
+ */
 export function detectLaps(
   samples: VboSample[],
   gates: VboGate[],

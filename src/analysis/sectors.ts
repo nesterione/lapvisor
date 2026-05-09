@@ -12,6 +12,10 @@
 import type { VboGate, VboSample } from "../adapters/vbo.js";
 import type { DetectedLap } from "./laps.js";
 
+/**
+ * One sector-gate crossing within a lap. `offsetMs` is elapsed time from
+ * lap start (full precision; round at presentation).
+ */
 export interface SectorSplit {
   /** Index into the input `sectors` array. */
   sectorIndex: number;

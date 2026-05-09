@@ -19,19 +19,38 @@ function isKartTrack(value: unknown): value is KartTrack {
   return true;
 }
 
-export async function loadKartTrack(path: string): Promise<KartTrack> {
-  const text = await readFile(path, "utf8");
+/**
+ * Pure variant of {@link loadKartTrack}: parses kart-track/v1 GeoJSON from a
+ * string. No file I/O, browser-safe. `source` is used only to label thrown
+ * `TrackLoadError` messages.
+ */
+export function parseKartTrack(text: string, source = "<input>"): KartTrack {
   let parsed: unknown;
   try {
     parsed = JSON.parse(text);
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
-    throw new TrackLoadError(`${path}: invalid JSON (${msg})`);
+    throw new TrackLoadError(`${source}: invalid JSON (${msg})`);
   }
   if (!isKartTrack(parsed)) {
-    throw new TrackLoadError(`${path}: not a kart-track/v1 FeatureCollection`);
+    throw new TrackLoadError(
+      `${source}: not a kart-track/v1 FeatureCollection`,
+    );
   }
   return parsed;
+}
+
+/**
+ * Read a `kart-track/v1` GeoJSON file from disk and validate it. I/O wrapper
+ * around {@link parseKartTrack}.
+ *
+ * @param path - Path to the track JSON file.
+ * @returns A validated `KartTrack`.
+ * @throws {TrackLoadError} on invalid JSON or schema mismatch.
+ */
+export async function loadKartTrack(path: string): Promise<KartTrack> {
+  const text = await readFile(path, "utf8");
+  return parseKartTrack(text, path);
 }
 
 /**
