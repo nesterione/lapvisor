@@ -1,6 +1,7 @@
 /**
  * `lapvisor session` — emit a complete render bundle for a single session as
- * JSON: meta + GPS samples + laps + sector splits + gates. Designed to be
+ * JSON: meta + GPS samples + laps + sector splits + per-lap summaries +
+ * session summary + gates. Designed to be
  * consumed by external UIs (the karting repo's `kart view`, agents building
  * dashboards, etc.). No HTML, no server, no browser.
  */
@@ -9,8 +10,15 @@ import { readFile } from "node:fs/promises";
 import { extname } from "node:path";
 import { defineCommand } from "citty";
 import { parseVbo, type VboGate } from "../../adapters/vbo.js";
+import { extractLap } from "../../analysis/lap-detail.js";
 import { detectLaps } from "../../analysis/laps.js";
 import { detectSectorSplits } from "../../analysis/sectors.js";
+import {
+  buildSessionSummary,
+  type SessionLapSummary,
+  type SessionSummary,
+  summarizeLap,
+} from "../../analysis/session-summary.js";
 import { loadKartTrack, trackGatesToVboGates } from "../../track/loader.js";
 import type { KartTrack } from "../../track/types.js";
 
@@ -49,12 +57,14 @@ interface SessionGate {
 }
 
 interface SessionBundle {
-  schema: "lapvisor-session/v1";
+  schema: "lapvisor-session/v2";
   source: { file: string; format: "vbo" };
   meta: { trackName: string | null; venue?: string; startedAt?: string };
   samples: SessionSample[];
   laps: SessionLap[];
   sectorSplits: SessionLapSectorSplits[];
+  lapSummaries: SessionLapSummary[];
+  sessionSummary: SessionSummary;
   gates: SessionGate[];
 }
 
@@ -113,6 +123,15 @@ export default defineCommand({
       v: round1(s.velocityKmh),
     }));
 
+    const lapSummaries = laps.map((lap) => {
+      const detail = extractLap(
+        file.samples,
+        lap,
+        sectorSplits.find((entry) => entry.lapIndex === lap.index),
+      );
+      return summarizeLap(detail);
+    });
+
     const gates: SessionGate[] = kartTrack
       ? kartTrack.features.map((f) => ({
           kind: f.properties.kind,
@@ -128,7 +147,7 @@ export default defineCommand({
         }));
 
     const bundle: SessionBundle = {
-      schema: "lapvisor-session/v1",
+      schema: "lapvisor-session/v2",
       source: { file: args.input, format: "vbo" },
       meta: {
         trackName: kartTrack?.name ?? null,
@@ -150,6 +169,8 @@ export default defineCommand({
           offsetMs: Math.round(s.offsetMs),
         })),
       })),
+      lapSummaries,
+      sessionSummary: buildSessionSummary(lapSummaries),
       gates,
     };
 
