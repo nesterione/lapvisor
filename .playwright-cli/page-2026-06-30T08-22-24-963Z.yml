@@ -1,0 +1,467 @@
+- generic [ref=e1]:
+  - dialog "About cookies on this site" [active] [ref=e3]:
+    - generic [ref=e4]:
+      - heading "About cookies on this site" [level=2] [ref=e5]:
+        - strong [ref=e6]: About cookies on this site
+      - paragraph [ref=e7]: We use cookies to collect and analyse information on site performance and usage, to provide social media features and to enhance and customise content and advertisements.
+      - paragraph [ref=e8]:
+        - link "Learn more" [ref=e9] [cursor=pointer]:
+          - /url: https://www.cookiehub.com/about-cookies
+    - generic [ref=e10]:
+      - button "Allow all cookies" [ref=e11] [cursor=pointer]
+      - button "Deny all" [ref=e12] [cursor=pointer]
+      - button "Cookie settings" [ref=e13] [cursor=pointer]
+  - banner [ref=e14]:
+    - generic [ref=e15]:
+      - text: 
+      - link [ref=e16] [cursor=pointer]:
+        - /url: https://www.racefacer.com/en
+      - navigation [ref=e17]:
+        - list [ref=e18]:
+          - listitem [ref=e19]:
+            - link "HOME" [ref=e20] [cursor=pointer]:
+              - /url: https://www.racefacer.com/en
+          - listitem [ref=e21]:
+            - link "ABOUT US" [ref=e22] [cursor=pointer]:
+              - /url: https://www.racefacer.com/en/karting-timing-software/about-us
+          - listitem [ref=e23]:
+            - link "RANKLIST" [ref=e24] [cursor=pointer]:
+              - /url: https://www.racefacer.com/en/ranklist
+          - listitem [ref=e25]:
+            - link "TRACKS" [ref=e26] [cursor=pointer]:
+              - /url: https://www.racefacer.com/en/tracks
+        - text:  
+      - generic [ref=e29]:
+        - text: Start Racing Now!
+        - generic [ref=e30]:
+          - link "Sign-in" [ref=e31] [cursor=pointer]:
+            - /url: https://www.racefacer.com/en/login
+          - text: or
+          - link "Register" [ref=e32] [cursor=pointer]:
+            - /url: https://www.racefacer.com/en/register?country=125&city=1828&track=plytineskartodrom
+          - text: Here
+  - generic [ref=e34]:
+    - navigation [ref=e37]:
+      - link "PLYTINES KARTODROMAS" [ref=e40] [cursor=pointer]:
+        - /url: https://www.racefacer.com/en/karting-tracks/lithuania/plytineskartodrom?track_configuration=
+        - strong [ref=e43]: PLYTINES KARTODROMAS
+      - list [ref=e44]:
+        - listitem [ref=e45]:
+          - link "Fan club" [ref=e46] [cursor=pointer]:
+            - /url: https://www.racefacer.com/en/karting-tracks/lithuania/plytineskartodrom/fanclub?track_configuration=
+            - generic [ref=e48]: Fan club
+        - listitem [ref=e49]:
+          - link "Gallery" [ref=e50] [cursor=pointer]:
+            - /url: https://www.racefacer.com/en/karting-tracks/lithuania/plytineskartodrom/gallery?track_configuration=
+            - generic [ref=e52]: Gallery
+    - generic [ref=e54]:
+      - generic [ref=e55]:
+        - img "Go-kart track logo" [ref=e58]
+        - generic [ref=e59]:
+          - generic [ref=e60]: PLYTINES KARTODROMAS
+          - generic [ref=e62]:
+            - generic [ref=e63]: Vilnius, Lithuania
+            - generic [ref=e66]: 680 m
+          - generic [ref=e68] [cursor=pointer]:
+            - text: Share
+            - generic [ref=e69]: 
+          - generic [ref=e71]:
+            - text: Closed
+            - text: 13:00 - 20:00
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - link "Racing Line" [ref=e75] [cursor=pointer]:
+              - /url: https://faceracerlive.s3.amazonaws.com/uploads/track_trajectory/ef7/942/133_trajectory_b982a6f61f9c0843abbfd4e82c803965.jpg
+              - generic [ref=e77]: Racing Line
+            - generic [ref=e81] [cursor=pointer]: Rank Title
+            - generic [ref=e85] [cursor=pointer]: Contacts
+          - combobox [ref=e88]:
+            - option "Summer Configuration" [selected]
+            - option "Winter Configuration"
+            - option "Tournament track"
+            - option "Varzybine"
+            - option "Autumn track"
+            - option "Žieminė trasa ratu"
+            - option "Darbuotoju track"
+            - option "Winter Configuration"
+      - generic [ref=e90]:
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - generic [ref=e97]: Contact Us
+            - generic [ref=e98]:
+              - generic [ref=e101]: PLYTINES KARTODROMAS
+              - generic [ref=e102]:
+                - generic [ref=e103]:
+                  - generic [ref=e104]: 
+                  - text: ": Plytines str. 27 Vilnius"
+                - generic [ref=e105]:
+                  - generic [ref=e106]: 
+                  - text: ":"
+                  - link "+37069956704" [ref=e107] [cursor=pointer]:
+                    - /url: tel:+37069956704
+                - generic [ref=e108]:
+                  - generic [ref=e109]: 
+                  - text: ":"
+                  - link "plytine@kartodromas.lt" [ref=e110] [cursor=pointer]:
+                    - /url: mailto:plytine@kartodromas.lt
+                - generic [ref=e111]:
+                  - generic [ref=e112]: 
+                  - text: ":"
+                  - link "http://plytineskartodromas.lt" [ref=e113] [cursor=pointer]:
+                    - /url: http://plytineskartodromas.lt
+                - generic [ref=e114]:
+                  - generic [ref=e115]: 
+                  - text: ":"
+                  - link "54.72499400, 25.34911000" [ref=e116] [cursor=pointer]:
+                    - /url: //www.google.com/maps/dir/?api=1&destination=54.72499400,25.34911000
+              - link "Write us an e-mail" [ref=e117] [cursor=pointer]:
+                - /url: https://www.racefacer.com/en/contact-track/plytineskartodrom
+          - generic [ref=e118]:
+            - generic [ref=e122]:
+              - generic [ref=e123]: Best Results
+              - generic [ref=e125] [cursor=pointer]: Share
+            - generic [ref=e126]:
+              - generic [ref=e127]: "Period:"
+              - combobox [ref=e129]:
+                - option "Day"
+                - option "Week"
+                - option "Month"
+                - option "Year" [selected]
+                - option "All time"
+            - generic [ref=e132]:
+              - text: 
+              - generic [ref=e133]:
+                - generic [ref=e134]:
+                  - generic [ref=e136]: Vaikiškas
+                  - link "1st Adas Ikanevicius 00:46.676" [ref=e137] [cursor=pointer]:
+                    - /url: https://www.racefacer.com/en/profile/adas.ikanevicius
+                    - generic [ref=e138]: 1st
+                    - generic [ref=e139]:
+                      - generic [ref=e141]: Adas Ikanevicius
+                      - generic [ref=e142]: 00:46.676
+                  - link "2nd Rokas Baniulis + 0.102 00:46.778" [ref=e143] [cursor=pointer]:
+                    - /url: https://www.racefacer.com/en/profile/rokas.baniulis.3
+                    - generic [ref=e144]: 2nd
+                    - generic [ref=e145]:
+                      - generic [ref=e146]: Rokas Baniulis
+                      - generic [ref=e147]: + 0.102
+                      - generic [ref=e148]: 00:46.778
+                  - link "3rd Kajus Kačanovskis + 0.294 00:46.970" [ref=e149] [cursor=pointer]:
+                    - /url: https://www.racefacer.com/en/profile/kajus.kačanovskis
+                    - generic [ref=e150]: 3rd
+                    - generic [ref=e151]:
+                      - generic [ref=e152]: Kajus Kačanovskis
+                      - generic [ref=e153]: + 0.294
+                      - generic [ref=e154]: 00:46.970
+                - generic [ref=e155]:
+                  - generic [ref=e157]: SR4
+                  - link "1st Jokubas Kaminskas* 00:38.059" [ref=e158] [cursor=pointer]:
+                    - /url: https://www.racefacer.com/en/profile/jokubas.kaminskas.3
+                    - generic [ref=e159]: 1st
+                    - generic [ref=e160]:
+                      - generic [ref=e162]: Jokubas Kaminskas*
+                      - generic [ref=e163]: 00:38.059
+                  - link "2nd Andrejus Lizunovas* + 3.683 00:41.742" [ref=e164] [cursor=pointer]:
+                    - /url: https://www.racefacer.com/en/profile/andrejus.lizunovas
+                    - generic [ref=e165]: 2nd
+                    - generic [ref=e166]:
+                      - generic [ref=e167]: Andrejus Lizunovas*
+                      - generic [ref=e168]: + 3.683
+                      - generic [ref=e169]: 00:41.742
+                  - link "3rd Vilius Lizunovas* + 3.741 00:41.800" [ref=e170] [cursor=pointer]:
+                    - /url: https://www.racefacer.com/en/profile/vilius.lizunovas
+                    - generic [ref=e171]: 3rd
+                    - generic [ref=e172]:
+                      - generic [ref=e173]: Vilius Lizunovas*
+                      - generic [ref=e174]: + 3.741
+                      - generic [ref=e175]: 00:41.800
+                - generic [ref=e176]:
+                  - generic [ref=e178]: Lietaus
+                  - link "1st No result --:--.---" [ref=e179] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e180]: 1st
+                    - generic [ref=e181]:
+                      - generic [ref=e182]: No result
+                      - generic [ref=e183]: "--:--.---"
+                  - link "2nd No result --.-- --:--.---" [ref=e184] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e185]: 2nd
+                    - generic [ref=e186]:
+                      - generic [ref=e187]: No result
+                      - generic [ref=e188]: "--.--"
+                      - generic [ref=e189]: "--:--.---"
+                  - link "3rd No result --.-- --:--.---" [ref=e190] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e191]: 3rd
+                    - generic [ref=e192]:
+                      - generic [ref=e193]: No result
+                      - generic [ref=e194]: "--.--"
+                      - generic [ref=e195]: "--:--.---"
+                - generic [ref=e196]:
+                  - generic [ref=e198]: BRIGGS
+                  - link "1st Denas Cesnuitis* 00:38.446" [ref=e199] [cursor=pointer]:
+                    - /url: https://www.racefacer.com/en/profile/denas.cesnuitis
+                    - generic [ref=e200]: 1st
+                    - generic [ref=e201]:
+                      - generic [ref=e203]: Denas Cesnuitis*
+                      - generic [ref=e204]: 00:38.446
+                  - link "2nd Viktor Cybulskij + 0.894 00:39.340" [ref=e205] [cursor=pointer]:
+                    - /url: https://www.racefacer.com/en/profile/viktor.cybulskij
+                    - generic [ref=e206]: 2nd
+                    - generic [ref=e207]:
+                      - generic [ref=e208]: Viktor Cybulskij
+                      - generic [ref=e209]: + 0.894
+                      - generic [ref=e210]: 00:39.340
+                  - link "3rd No result --.-- --:--.---" [ref=e211] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e212]: 3rd
+                    - generic [ref=e213]:
+                      - generic [ref=e214]: No result
+                      - generic [ref=e215]: "--.--"
+                      - generic [ref=e216]: "--:--.---"
+                - generic [ref=e217]:
+                  - generic [ref=e219]: Ziemos
+                  - link "1st No result --:--.---" [ref=e220] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e221]: 1st
+                    - generic [ref=e222]:
+                      - generic [ref=e223]: No result
+                      - generic [ref=e224]: "--:--.---"
+                  - link "2nd No result --.-- --:--.---" [ref=e225] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e226]: 2nd
+                    - generic [ref=e227]:
+                      - generic [ref=e228]: No result
+                      - generic [ref=e229]: "--.--"
+                      - generic [ref=e230]: "--:--.---"
+                  - link "3rd No result --.-- --:--.---" [ref=e231] [cursor=pointer]:
+                    - /url: "#"
+                    - generic [ref=e232]: 3rd
+                    - generic [ref=e233]:
+                      - generic [ref=e234]: No result
+                      - generic [ref=e235]: "--.--"
+                      - generic [ref=e236]: "--:--.---"
+        - generic [ref=e237]:
+          - generic [ref=e238]:
+            - generic [ref=e242]:
+              - generic [ref=e243]: Ranking by time
+              - generic [ref=e245] [cursor=pointer]: Share
+            - generic [ref=e246]:
+              - combobox [ref=e248]:
+                - option "Everyone" [selected]
+                - option "DRIVER"
+                - option "EXPERT"
+                - option "RACER"
+              - combobox [ref=e251]:
+                - option "Everyone" [selected]
+                - option "6-10"
+                - option "10-14"
+                - option "14-18"
+                - option "18-40"
+                - option "40+"
+              - combobox [ref=e254]:
+                - option "Vaikiškas" [selected]
+                - option "SR4"
+                - option "Lietaus"
+                - option "BRIGGS"
+                - option "Ziemos"
+              - combobox [ref=e257]:
+                - option "Day"
+                - option "Week"
+                - option "Month"
+                - option "Year" [selected]
+                - option "All time"
+            - generic [ref=e259]:
+              - generic [ref=e260]:
+                - generic [ref=e261]:
+                  - link "1st place Adas Ikanevicius 00:46.676 21.04.2026" [ref=e262] [cursor=pointer]:
+                    - /url: https://www.racefacer.com/en/profile/adas.ikanevicius
+                    - generic [ref=e265]: 1st place
+                    - generic [ref=e266]: Adas Ikanevicius
+                    - generic [ref=e267]: 00:46.676
+                    - generic [ref=e268]: 21.04.2026
+                  - link "2nd Rokas Baniulis 00:46.778 17.03.2026" [ref=e269] [cursor=pointer]:
+                    - /url: https://www.racefacer.com/en/profile/rokas.baniulis.3
+                    - generic [ref=e271]: 2nd
+                    - generic [ref=e272]: Rokas Baniulis
+                    - generic [ref=e273]: 00:46.778
+                    - generic [ref=e274]: 17.03.2026
+                  - link "3rd Kajus Kačanovskis 00:46.970 21.04.2026" [ref=e275] [cursor=pointer]:
+                    - /url: https://www.racefacer.com/en/profile/kajus.kačanovskis
+                    - generic [ref=e277]: 3rd
+                    - generic [ref=e278]: Kajus Kačanovskis
+                    - generic [ref=e279]: 00:46.970
+                    - generic [ref=e280]: 21.04.2026
+                - generic [ref=e281]:
+                  - generic [ref=e282]:
+                    - generic [ref=e283]: Pos
+                    - generic [ref=e284]: Name
+                    - generic [ref=e285]: Date
+                    - generic [ref=e286]: Best Time
+                  - text: 
+                  - generic [ref=e287]:
+                    - generic [ref=e288]:
+                      - generic [ref=e289]:
+                        - generic [ref=e290]: "4"
+                        - link "GRANTAS CIBULSKAS 05.05.2026" [ref=e292] [cursor=pointer]:
+                          - /url: https://www.racefacer.com/en/profile/grantas.cibulskas.2
+                          - generic [ref=e293]: GRANTAS CIBULSKAS
+                          - generic [ref=e294]: 05.05.2026
+                        - link "00:47.134 " [ref=e295] [cursor=pointer]:
+                          - /url: https://www.racefacer.com/en/profile/grantas.cibulskas.2/sessions/d67d6138-b173-449a-9990-af52358e5fcb/#laps
+                          - generic [ref=e296]: 00:47.134
+                          - generic [ref=e297]: 
+                      - generic [ref=e298]:
+                        - generic [ref=e299]: "5"
+                        - link "Ignas Grincevicius 19.05.2026" [ref=e301] [cursor=pointer]:
+                          - /url: https://www.racefacer.com/en/profile/ignas.grincevicius
+                          - generic [ref=e302]: Ignas Grincevicius
+                          - generic [ref=e303]: 19.05.2026
+                        - link "00:47.195 " [ref=e304] [cursor=pointer]:
+                          - /url: https://www.racefacer.com/en/profile/ignas.grincevicius/sessions/0d7dceab-f36e-4861-b2f7-574cf49df2db/#laps
+                          - generic [ref=e305]: 00:47.195
+                          - generic [ref=e306]: 
+                      - generic [ref=e307]:
+                        - generic [ref=e308]: "6"
+                        - link "Nathanael Komar 24.03.2026" [ref=e310] [cursor=pointer]:
+                          - /url: https://www.racefacer.com/en/profile/nathanael.komar
+                          - generic [ref=e311]: Nathanael Komar
+                          - generic [ref=e312]: 24.03.2026
+                        - link "00:47.205 " [ref=e313] [cursor=pointer]:
+                          - /url: https://www.racefacer.com/en/profile/nathanael.komar/sessions/d6c9c2f8-9bd7-4bb2-a779-1183e916a7a1/#laps
+                          - generic [ref=e314]: 00:47.205
+                          - generic [ref=e315]: 
+                    - text:  
+              - generic [ref=e317]: Load more results
+          - generic [ref=e318]:
+            - generic [ref=e322]:
+              - generic [ref=e323]: Ranking by Points
+              - generic: 
+            - generic [ref=e324]:
+              - combobox [ref=e326]:
+                - option "Everyone" [selected]
+                - option "DRIVER"
+                - option "EXPERT"
+                - option "RACER"
+              - combobox [ref=e329]:
+                - option "Everyone" [selected]
+                - option "6-10"
+                - option "10-14"
+                - option "14-18"
+                - option "18-40"
+                - option "40+"
+              - combobox [ref=e332]:
+                - option "Day"
+                - option "Week"
+                - option "Month"
+                - option "Year" [selected]
+                - option "All time"
+            - generic [ref=e334]:
+              - text: 
+              - generic [ref=e336]:
+                - generic [ref=e337]:
+                  - generic [ref=e338]: Pos
+                  - generic [ref=e339]: Name
+                  - generic [ref=e340]:
+                    - generic [ref=e341]: Driving
+                    - generic [ref=e342]: From pos.
+                    - generic [ref=e343]: Challenges
+                    - generic [ref=e344]: Championships
+                  - generic [ref=e345]: Total
+                - generic [ref=e346]:
+                  - generic [ref=e347]:
+                    - generic [ref=e348]:
+                      - generic [ref=e349]: "1"
+                      - link "Gintaras Drungilas*" [ref=e351] [cursor=pointer]:
+                        - /url: https://www.racefacer.com/en/profile/gintaras.drungilas
+                      - generic [ref=e353]:
+                        - generic [ref=e354]: 813p.
+                        - generic [ref=e355]: 96p.
+                        - generic [ref=e356]: 0p.
+                        - generic [ref=e357]: 0p.
+                      - generic [ref=e359]: 909 p.
+                      - text: 
+                    - generic [ref=e360]:
+                      - generic [ref=e361]: "2"
+                      - link "Erikas Bacenas" [ref=e363] [cursor=pointer]:
+                        - /url: https://www.racefacer.com/en/profile/erikas.bacenas.3
+                      - generic [ref=e365]:
+                        - generic [ref=e366]: 701p.
+                        - generic [ref=e367]: 100p.
+                        - generic [ref=e368]: 0p.
+                        - generic [ref=e369]: 0p.
+                      - generic [ref=e371]: 801 p.
+                      - text: 
+                    - generic [ref=e372]:
+                      - generic [ref=e373]: "3"
+                      - link "Andrius Mur" [ref=e375] [cursor=pointer]:
+                        - /url: https://www.racefacer.com/en/profile/andrius.mur
+                      - generic [ref=e377]:
+                        - generic [ref=e378]: 657p.
+                        - generic [ref=e379]: 89p.
+                        - generic [ref=e380]: 0p.
+                        - generic [ref=e381]: 0p.
+                      - generic [ref=e383]: 746 p.
+                      - text: 
+                  - text:  
+              - link "View Full Ranking" [ref=e385] [cursor=pointer]:
+                - /url: https://www.racefacer.com/en/ranklist?track=133
+                - text: View Full Ranking
+                - generic [ref=e386]: 
+  - generic [ref=e387]:
+    - text: 
+    - contentinfo [ref=e388]:
+      - generic [ref=e390]:
+        - link [ref=e391] [cursor=pointer]:
+          - /url: https://www.racefacer.com/en
+        - navigation [ref=e392]:
+          - list [ref=e393]:
+            - listitem [ref=e394]:
+              - link "Home" [ref=e395] [cursor=pointer]:
+                - /url: https://www.racefacer.com/en
+            - listitem [ref=e396]:
+              - link "Social network" [ref=e397] [cursor=pointer]:
+                - /url: https://www.racefacer.com/en/karting-timing-software/social-network
+            - listitem [ref=e398]:
+              - link "Ranking" [ref=e399] [cursor=pointer]:
+                - /url: https://www.racefacer.com/en/ranklist
+            - listitem [ref=e400]:
+              - link "Tracks" [ref=e401] [cursor=pointer]:
+                - /url: https://www.racefacer.com/en/karting-tracks
+            - listitem [ref=e402]:
+              - link "Contact us" [ref=e403] [cursor=pointer]:
+                - /url: https://www.racefacer.com/en/karting-timing-software/contact
+          - list [ref=e404]:
+            - listitem [ref=e405]:
+              - link "RaceFacer community T&C" [ref=e406] [cursor=pointer]:
+                - /url: https://www.racefacer.com/en/terms-and-conditions
+            - listitem [ref=e407]:
+              - link "Privacy policy" [ref=e408] [cursor=pointer]:
+                - /url: https://www.racefacer.com/en/privacy-policy
+            - listitem [ref=e409]:
+              - link "Cookies" [ref=e410] [cursor=pointer]:
+                - /url: https://www.racefacer.com/en/cookies-policy
+        - link "Karting Management Software Innovative global solution for go kart centers Learn more " [ref=e411] [cursor=pointer]:
+          - /url: https://www.racefacer.com/en/karting-timing-software
+          - heading "Karting Management Software" [level=4] [ref=e412]
+          - paragraph [ref=e413]: Innovative global solution for go kart centers
+          - paragraph [ref=e415]:
+            - text: Learn more
+            - generic [ref=e416]: 
+        - generic [ref=e417]:
+          - link [ref=e418] [cursor=pointer]:
+            - /url: https://www.facebook.com/RaceFacer
+          - link [ref=e419] [cursor=pointer]:
+            - /url: https://www.instagram.com/racefacer
+          - link [ref=e420] [cursor=pointer]:
+            - /url: https://www.youtube.com/channel/UC-Mc1pmfrGwLwFAgBMtFAhA
+        - generic [ref=e421]:
+          - text: Copyright © FaceRacer. All rights reserved.
+          - text: Web Design and Development by Faceracer Ltd.
+      - generic [ref=e423]:
+        - text: We use cookies to provide you with secure and effective browsing experience. You can find more about our cookies policy
+        - link "HERE" [ref=e424] [cursor=pointer]:
+          - /url: https://www.racefacer.com/en/cookies-policy
+        - text: .
+        - button [ref=e425] [cursor=pointer]
+  - text:         ;     ; 

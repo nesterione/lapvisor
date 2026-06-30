@@ -38,6 +38,10 @@
       "types": "./dist/sdk/bundles.d.ts",
       "import": "./dist/sdk/bundles.js"
     },
+    "./compare": {
+      "types": "./dist/sdk/compare.d.ts",
+      "import": "./dist/sdk/compare.js"
+    },
     "./track": {
       "types": "./dist/sdk/track.d.ts",
       "import": "./dist/sdk/track.js"

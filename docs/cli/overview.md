@@ -19,6 +19,9 @@ Requires Node.js 22+. End users do not need Bun.
 | `lapvisor laps <file>` | Summarize lap times from a session file (count, best, mean, venue). |
 | `lapvisor session <file> [--track <track.json>]` | Emit a complete render bundle (samples + laps + sectors + gates) as `lapvisor-session/v2` JSON. |
 | `lapvisor lap <file> <index> [--track <track.json>] [--json]` | Emit one lap as `lapvisor-lap/v1` JSON (rich telemetry + distance + sectors + per-lap aggregates). |
+| `lapvisor ideal <file> [--track <track.json>] [--mini-sectors N] [--json]` | Show the best-of-each-mini-sector "ideal lap" and gap to your best lap. Emits `lapvisor-session-improvement/v1`. |
+| `lapvisor compare <file> <refIdx> <candIdx> [--track <track.json>] [--mini-sectors N] [--corners] [--json]` | Compare two laps in the same session: delta-t curve + per-mini-sector deltas (+ optional per-corner deltas). Emits `lapvisor-lap-compare/v1`. |
+| `lapvisor improve <file> [--track <track.json>] [--mini-sectors N] [--top N] [--json]` | **Headline** — where to find time across the session. Ranked corner-level opportunities + ideal lap. Emits `lapvisor-session-improvement/v1` with `topOpportunities`. |
 | `lapvisor track create [-i <intent.json>] [-o <track.json>] [--pretty]` | Build a `kart-track/v1` GeoJSON track from a structured gate description. |
 | `lapvisor track edit <track.json> [--port <n>] [--readOnly]` | Open a local browser editor for a `kart-track/v1` file. |
 
@@ -48,6 +51,8 @@ The CLI is the canonical reference implementation of the bundle formats. The sam
 
 - `lapvisor session …` ↔ `buildSessionBundle` (`lapvisor/bundles`)
 - `lapvisor lap …` ↔ `buildLapBundle` (`lapvisor/bundles`)
+- `lapvisor ideal …` / `lapvisor improve …` ↔ `buildSessionImprovementBundle` (`lapvisor/bundles`)
+- `lapvisor compare …` ↔ `buildLapComparisonBundle` (`lapvisor/bundles`)
 - `lapvisor track create …` ↔ `buildKartTrack` (`lapvisor/track`)
 
 Format specs live in [`../formats/`](../formats/).

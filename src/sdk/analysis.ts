@@ -7,6 +7,11 @@ export {
   type LapAggregates,
   lapAggregates,
 } from "../analysis/aggregates.js";
+export {
+  type Corner,
+  type DetectCornersOptions,
+  detectCorners,
+} from "../analysis/corners.js";
 export { cumulativeDistance } from "../analysis/distance.js";
 export {
   extractLap,
@@ -23,6 +28,21 @@ export {
   NoStartGateError,
   type RejectedCrossing,
 } from "../analysis/laps.js";
+export {
+  type BuildMiniSectorsOptions,
+  bestMiniSectorsAcrossSession,
+  buildMiniSectors,
+  type IdealLap,
+  type IdealMiniSector,
+  type LapMiniSectors,
+  type MiniSector,
+} from "../analysis/mini-sectors.js";
+export {
+  type ResampledLap,
+  type ResampledSample,
+  type ResampleOptions,
+  resampleByDistance,
+} from "../analysis/resample.js";
 export {
   detectSectorSplits,
   type LapSectorSplits,

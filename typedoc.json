@@ -5,6 +5,7 @@
     "src/sdk/adapters.ts",
     "src/sdk/analysis.ts",
     "src/sdk/bundles.ts",
+    "src/sdk/compare.ts",
     "src/sdk/track.ts",
     "src/sdk/time.ts"
   ],

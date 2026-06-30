@@ -21,6 +21,7 @@ export default defineConfig([
       "sdk/adapters": "src/sdk/adapters.ts",
       "sdk/analysis": "src/sdk/analysis.ts",
       "sdk/bundles": "src/sdk/bundles.ts",
+      "sdk/compare": "src/sdk/compare.ts",
       "sdk/track": "src/sdk/track.ts",
       "sdk/time": "src/sdk/time.ts",
     },

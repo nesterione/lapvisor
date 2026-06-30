@@ -25,6 +25,7 @@ export default defineConfig({
       { text: "CLI", link: "/cli/overview" },
       { text: "API", link: "/api/" },
       { text: "Formats", link: "/formats/" },
+      { text: "Proposals", link: "/proposals/" },
     ],
     sidebar: {
       "/sdk/": [
@@ -63,11 +64,22 @@ export default defineConfig({
               text: "lapvisor-session/v2",
               link: "/formats/lapvisor-session-v2",
             },
+            {
+              text: "lapvisor-lap-compare/v1",
+              link: "/formats/lapvisor-lap-compare-v1",
+            },
+            {
+              text: "lapvisor-session-improvement/v1",
+              link: "/formats/lapvisor-session-improvement-v1",
+            },
           ],
         },
         {
           text: "Analysis notes",
-          items: [{ text: "Lap detection", link: "/analysis/laps" }],
+          items: [
+            { text: "Lap detection", link: "/analysis/laps" },
+            { text: "Corner detection", link: "/analysis/corners" },
+          ],
         },
       ],
       "/extending/": [
@@ -83,7 +95,18 @@ export default defineConfig({
       "/analysis/": [
         {
           text: "Analysis notes",
-          items: [{ text: "Lap detection", link: "/analysis/laps" }],
+          items: [
+            { text: "Lap detection", link: "/analysis/laps" },
+            { text: "Corner detection", link: "/analysis/corners" },
+          ],
+        },
+      ],
+      "/proposals/": [
+        {
+          text: "Proposals",
+          items: [
+            { text: "Report-builder proposals", link: "/proposals/" },
+          ],
         },
       ],
       "/api/": apiSidebar,

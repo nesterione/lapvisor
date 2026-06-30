@@ -9,10 +9,18 @@
  */
 
 export {
+  type BuildLapComparisonInput,
+  buildLapComparisonBundle,
+} from "../bundles/lap-compare-v1.js";
+export {
   type BuildLapBundleInput,
   buildLapBundle,
 } from "../bundles/lap-v1.js";
 export { buildLapsSummary } from "../bundles/laps-summary.js";
+export {
+  type BuildSessionImprovementInput,
+  buildSessionImprovementBundle,
+} from "../bundles/session-improvement-v1.js";
 export {
   type BuildSessionBundleInput,
   buildSessionBundle,
@@ -21,6 +29,11 @@ export type {
   BundleMeta,
   BundleSource,
   LapBundle,
+  LapCompareBundle,
+  LapCompareCorner,
+  LapCompareDeltaT,
+  LapCompareLapRef,
+  LapCompareMiniSector,
   LapsSummary,
   SessionBundle,
   SessionBundleLap,
@@ -28,4 +41,9 @@ export type {
   SessionBundleSample,
   SessionBundleSectorSplit,
   SessionGate,
+  SessionImprovementBestLap,
+  SessionImprovementBundle,
+  SessionImprovementIdealLap,
+  SessionImprovementIdealMiniSector,
+  SessionImprovementOpportunity,
 } from "../bundles/types.js";
